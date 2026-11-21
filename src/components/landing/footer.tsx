@@ -11,137 +11,98 @@ export function Footer() {
 
   return (
     <>
-      <footer id="contact" className="bg-brand-surface border-t border-brand-border pt-16 pb-24 lg:pb-12 text-sm text-brand-text-muted transition-colors duration-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-brand-border">
-            {/* Column 1: Brand Info */}
-            <div className="lg:col-span-5 space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-brand-gold to-brand-purple flex items-center justify-center p-0.5 shadow-gold">
-                  <div className="w-full h-full bg-brand-bg rounded-[7px] flex items-center justify-center">
-                    <span className="text-brand-gold font-black tracking-wider text-sm">FF</span>
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-extrabold tracking-widest text-lg text-brand-text font-display">
-                    {BRAND_NAME}
-                  </span>
-                  <span className="text-[10px] tracking-widest text-brand-gold uppercase font-semibold">
-                    {PRODUCT_NAME_BN}
-                  </span>
+      <footer id="contact" className="bg-brand-surface border-t border-brand-border py-8 sm:py-10 text-xs text-brand-text-muted transition-colors duration-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          {/* Main Compact Row */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-5 pb-6 border-b border-brand-border">
+            {/* Brand Logo & Name */}
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-gold to-brand-purple flex items-center justify-center p-0.5 shadow-gold">
+                <div className="w-full h-full bg-brand-bg rounded-[7px] flex items-center justify-center">
+                  <span className="text-brand-gold font-black tracking-wider text-xs">FF</span>
                 </div>
               </div>
-
-              <p className="text-sm leading-relaxed max-w-sm text-brand-text-muted">
-                FORCE FUEL পুরুষদের শক্তি, স্ট্যামিনা ও সুস্থতা ধরে রাখার জন্য প্রিমিয়াম সাপ্লিমেন্ট। বিশ্বখ্যাত স্ট্যান্ডার্ডাইজড G115® প্যানাক্স জিনসেং ও KSM-66® অশ্বগন্ধা রুট এক্সট্রাক্ট এর সমন্বয়ে তৈরি।
-              </p>
-
-              <div className="pt-2 text-xs text-brand-text-dim">
-                ৬০ ডোজ | ডায়েটারি সাপ্লিমেন্ট | সারা দেশে ক্যাশ অন ডেলিভারি
+              <div className="flex flex-col">
+                <span className="font-extrabold tracking-widest text-base text-brand-text font-display">
+                  {BRAND_NAME}
+                </span>
+                <span className="text-[9px] tracking-widest text-brand-gold uppercase font-semibold">
+                  {PRODUCT_NAME_BN}
+                </span>
               </div>
             </div>
 
-            {/* Column 2: Quick Links */}
-            <div className="lg:col-span-3 space-y-3">
-              <h4 className="text-brand-text font-bold uppercase tracking-wider text-xs">
-                প্রয়োজনীয় লিংক
-              </h4>
-              <ul className="space-y-2.5">
-                <li>
-                  <a href="#product-details" className="text-brand-text-muted hover:text-brand-gold transition-colors">
-                    পণ্য বিবরণ ও স্পেকস
-                  </a>
-                </li>
-                <li>
-                  <a href="#ingredients" className="text-brand-text-muted hover:text-brand-gold transition-colors">
-                    আসল কার্যকরী উপাদান
-                  </a>
-                </li>
-                <li>
-                  <a href="#gallery" className="text-brand-text-muted hover:text-brand-gold transition-colors">
-                    প্রোডাক্ট গ্যালারি
-                  </a>
-                </li>
-                <li>
-                  <a href="#faq" className="text-brand-text-muted hover:text-brand-gold transition-colors">
-                    সাধারণ প্রশ্ন ও উত্তর
-                  </a>
-                </li>
-                <li>
-                  <Link href="/checkout?qty=1" className="text-brand-gold hover:underline font-semibold">
-                    ক্যাশ অন ডেলিভারি চেকআউট
-                  </Link>
-                </li>
-              </ul>
+            {/* Quick Contact & Action Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+              <a
+                href={`tel:${DEFAULT_SETTINGS.contact_phone}`}
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs font-semibold text-brand-text transition-colors group"
+              >
+                <Phone className="w-3.5 h-3.5 text-brand-gold group-hover:scale-110 transition-transform" />
+                <span>{DEFAULT_SETTINGS.contact_phone}</span>
+              </a>
+
+              <a
+                href={`https://wa.me/${DEFAULT_SETTINGS.whatsapp_number.replace(/[^0-9]/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs font-semibold text-brand-text transition-colors group"
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-emerald-500 group-hover:scale-110 transition-transform" />
+                <span>হোয়াটসঅ্যাপ</span>
+              </a>
+
+              <Link
+                href="/checkout?qty=1"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gold-gradient text-black font-extrabold text-xs shadow-gold hover:bg-gold-gradient-hover transition-all"
+              >
+                <span>অর্ডার করুন (COD)</span>
+              </Link>
             </div>
 
-            {/* Column 3: Contact & Legal */}
-            <div className="lg:col-span-4 space-y-4">
-              <h4 className="text-brand-text font-bold uppercase tracking-wider text-xs">
-                গ্রাহক সেবা ও যোগাযোগ
-              </h4>
-
-              <div className="space-y-3">
-                <a
-                  href={`tel:${DEFAULT_SETTINGS.contact_phone}`}
-                  className="flex items-center gap-3 p-3.5 rounded-xl bg-brand-card border border-brand-border hover:border-brand-gold/40 transition-colors group"
-                >
-                  <Phone className="w-4 h-4 text-brand-gold flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <p className="text-xs text-brand-text-dim">সরাসরি কল সেন্টার</p>
-                    <p className="text-sm font-semibold text-brand-text">{DEFAULT_SETTINGS.contact_phone}</p>
-                  </div>
-                </a>
-
-                <a
-                  href={`https://wa.me/${DEFAULT_SETTINGS.whatsapp_number.replace(/[^0-9]/g, "")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3.5 rounded-xl bg-brand-card border border-brand-border hover:border-emerald-500/40 transition-colors group"
-                >
-                  <MessageSquare className="w-4 h-4 text-emerald-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <div>
-                    <p className="text-xs text-brand-text-dim">হোয়াটসঅ্যাপ মেসেজ সহায়তা</p>
-                    <p className="text-sm font-semibold text-brand-text">{DEFAULT_SETTINGS.whatsapp_number}</p>
-                  </div>
-                </a>
-              </div>
-
-              {/* Legal Links */}
-              <div className="flex flex-wrap gap-4 pt-2 text-xs">
-                <button
-                  onClick={() => setActiveModal("privacy")}
-                  className="text-brand-text-muted hover:text-brand-gold transition-colors underline"
-                >
-                  গোপনীয়তা নীতি (Privacy Policy)
-                </button>
-                <button
-                  onClick={() => setActiveModal("terms")}
-                  className="text-brand-text-muted hover:text-brand-gold transition-colors underline"
-                >
-                  শর্তাবলী (Terms & Conditions)
-                </button>
-                <button
-                  onClick={() => setActiveModal("delivery")}
-                  className="text-brand-text-muted hover:text-brand-gold transition-colors underline"
-                >
-                  ডেলিভারি ও রিটার্ন পলিসি
-                </button>
-              </div>
+            {/* Quick Navigation Links */}
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-medium">
+              <a href="#product-details" className="text-brand-text-muted hover:text-brand-gold transition-colors">
+                পণ্য বিবরণ
+              </a>
+              <a href="#gallery" className="text-brand-text-muted hover:text-brand-gold transition-colors">
+                গ্যালারি
+              </a>
+              <a href="#faq" className="text-brand-text-muted hover:text-brand-gold transition-colors">
+                সাধারণ প্রশ্ন (FAQ)
+              </a>
             </div>
           </div>
 
-          {/* Bottom Bar & Disclaimer */}
-          <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brand-text-dim">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
-              <p>© {new Date().getFullYear()} {BRAND_NAME}. সর্বস্বত্ব সংরক্ষিত।</p>
-              <div className="flex items-center">
-                <ThemeToggle />
-              </div>
+          {/* Bottom Bar: Legal Modals + Copyright + Theme Toggle */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-brand-text-dim">
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <button
+                onClick={() => setActiveModal("privacy")}
+                className="hover:text-brand-gold transition-colors underline"
+              >
+                গোপনীয়তা নীতি
+              </button>
+              <span>•</span>
+              <button
+                onClick={() => setActiveModal("terms")}
+                className="hover:text-brand-gold transition-colors underline"
+              >
+                শর্তাবলী
+              </button>
+              <span>•</span>
+              <button
+                onClick={() => setActiveModal("delivery")}
+                className="hover:text-brand-gold transition-colors underline"
+              >
+                ডেলিভারি ও রিটার্ন
+              </button>
             </div>
-            <p className="text-center md:text-right max-w-lg">
-              সতর্কবার্তা: এটি একটি খাদ্যতালিকাগত সম্পূরক (Dietary Supplement)। এটি কোনো জটিল রোগ নির্ণয়, চিকিৎসা বা নিরাময়ের জন্য নির্দেশিত নয়।
-            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <span>© {new Date().getFullYear()} {BRAND_NAME}. সর্বস্বত্ব সংরক্ষিত।</span>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </footer>

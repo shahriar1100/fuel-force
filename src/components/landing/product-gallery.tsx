@@ -24,9 +24,9 @@ export function ProductGallery({ images = INITIAL_PRODUCT_IMAGES }: GalleryProps
   };
 
   return (
-    <section id="gallery" className="py-20 bg-brand-surface relative border-y border-brand-border">
+    <section id="gallery" className="py-12 sm:py-16 bg-brand-surface relative border-y border-brand-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
           <span className="text-xs font-bold tracking-widest text-brand-gold uppercase">
             প্রোডাক্ট ভিজ্যুয়াল গ্যালারি
           </span>

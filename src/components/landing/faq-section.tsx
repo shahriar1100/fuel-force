@@ -13,9 +13,9 @@ export function FAQSection() {
   };
 
   return (
-    <section id="faq" className="py-20 bg-brand-bg relative">
+    <section id="faq" className="py-12 sm:py-16 bg-brand-bg relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
           <span className="text-xs font-bold tracking-widest text-brand-gold uppercase">
             সাধারণ জিজ্ঞাসা ও উত্তর
           </span>

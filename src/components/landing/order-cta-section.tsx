@@ -20,7 +20,7 @@ export function OrderCTASection() {
   const handleDecrement = () => setQuantity((q) => Math.max(1, q - 1));
 
   return (
-    <section className="py-20 bg-luxury-hero relative border-t border-brand-border overflow-hidden">
+    <section className="py-12 sm:py-16 bg-luxury-hero relative border-t border-brand-border overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-brand-purple/20 blur-[130px] pointer-events-none rounded-full" />
 

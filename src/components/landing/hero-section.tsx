@@ -23,7 +23,7 @@ export function HeroSection() {
   const handleDecrement = () => setQuantity((q) => Math.max(1, q - 1));
 
   return (
-    <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-luxury-hero">
+    <section className="relative pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-20 overflow-hidden bg-luxury-hero">
       {/* Ambient background glow accents */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple/20 blur-[130px] pointer-events-none rounded-full" />
       <div className="absolute top-1/3 right-10 w-80 h-80 bg-brand-gold/10 blur-[100px] pointer-events-none rounded-full" />

@@ -23,9 +23,8 @@ export function Header() {
   const totalQuantity = item ? item.quantity : 0;
 
   const navLinks = [
-    { label: "প্রোডাক্ট বিবরণ", href: "#product-details" },
-    { label: "উপাদানসমূহ", href: "#ingredients" },
-    { label: "ব্যবহার বিধি", href: "#product-info" },
+    { label: "পণ্য বিবরণ", href: "#product-details" },
+    { label: "গ্যালারি", href: "#gallery" },
     { label: "সাধারণ প্রশ্ন (FAQ)", href: "#faq" },
     { label: "যোগাযোগ", href: "#contact" },
   ];

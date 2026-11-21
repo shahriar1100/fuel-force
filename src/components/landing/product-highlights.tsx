@@ -37,9 +37,9 @@ const highlights = [
 
 export function ProductHighlights() {
   return (
-    <section className="py-20 bg-brand-surface relative overflow-hidden border-y border-brand-border">
+    <section className="py-12 sm:py-16 bg-brand-surface relative overflow-hidden border-y border-brand-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
           <span className="text-xs font-bold tracking-widest text-brand-gold uppercase">
             ভেরিফায়েড প্যাকেজিং মানদণ্ড
           </span>
