@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Phone, MessageSquare, X } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { BRAND_NAME, PRODUCT_NAME, PRODUCT_NAME_BN, DEFAULT_SETTINGS } from "@/lib/constants";
 
 export function Footer() {
@@ -10,7 +11,7 @@ export function Footer() {
 
   return (
     <>
-      <footer id="contact" className="bg-black border-t border-brand-border pt-16 pb-24 lg:pb-12 text-sm text-brand-text-muted">
+      <footer id="contact" className="bg-brand-surface border-t border-brand-border pt-16 pb-24 lg:pb-12 text-sm text-brand-text-muted transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-brand-border">
             {/* Column 1: Brand Info */}
@@ -31,7 +32,7 @@ export function Footer() {
                 </div>
               </div>
 
-              <p className="text-sm leading-relaxed max-w-sm">
+              <p className="text-sm leading-relaxed max-w-sm text-brand-text-muted">
                 FORCE FUEL পুরুষদের শক্তি, স্ট্যামিনা ও সুস্থতা ধরে রাখার জন্য প্রিমিয়াম সাপ্লিমেন্ট। বিশ্বখ্যাত স্ট্যান্ডার্ডাইজড G115® প্যানাক্স জিনসেং ও KSM-66® অশ্বগন্ধা রুট এক্সট্রাক্ট এর সমন্বয়ে তৈরি।
               </p>
 
@@ -47,22 +48,22 @@ export function Footer() {
               </h4>
               <ul className="space-y-2.5">
                 <li>
-                  <a href="#product-details" className="hover:text-brand-gold transition-colors">
+                  <a href="#product-details" className="text-brand-text-muted hover:text-brand-gold transition-colors">
                     পণ্য বিবরণ ও স্পেকস
                   </a>
                 </li>
                 <li>
-                  <a href="#ingredients" className="hover:text-brand-gold transition-colors">
+                  <a href="#ingredients" className="text-brand-text-muted hover:text-brand-gold transition-colors">
                     আসল কার্যকরী উপাদান
                   </a>
                 </li>
                 <li>
-                  <a href="#gallery" className="hover:text-brand-gold transition-colors">
+                  <a href="#gallery" className="text-brand-text-muted hover:text-brand-gold transition-colors">
                     প্রোডাক্ট গ্যালারি
                   </a>
                 </li>
                 <li>
-                  <a href="#faq" className="hover:text-brand-gold transition-colors">
+                  <a href="#faq" className="text-brand-text-muted hover:text-brand-gold transition-colors">
                     সাধারণ প্রশ্ন ও উত্তর
                   </a>
                 </li>
@@ -83,9 +84,9 @@ export function Footer() {
               <div className="space-y-3">
                 <a
                   href={`tel:${DEFAULT_SETTINGS.contact_phone}`}
-                  className="flex items-center gap-3 p-3 rounded-xl bg-brand-surface border border-brand-border hover:border-brand-gold/40 transition-colors"
+                  className="flex items-center gap-3 p-3.5 rounded-xl bg-brand-card border border-brand-border hover:border-brand-gold/40 transition-colors group"
                 >
-                  <Phone className="w-4 h-4 text-brand-gold flex-shrink-0" />
+                  <Phone className="w-4 h-4 text-brand-gold flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <div>
                     <p className="text-xs text-brand-text-dim">সরাসরি কল সেন্টার</p>
                     <p className="text-sm font-semibold text-brand-text">{DEFAULT_SETTINGS.contact_phone}</p>
@@ -96,9 +97,9 @@ export function Footer() {
                   href={`https://wa.me/${DEFAULT_SETTINGS.whatsapp_number.replace(/[^0-9]/g, "")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl bg-brand-surface border border-brand-border hover:border-emerald-500/40 transition-colors"
+                  className="flex items-center gap-3 p-3.5 rounded-xl bg-brand-card border border-brand-border hover:border-emerald-500/40 transition-colors group"
                 >
-                  <MessageSquare className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                  <MessageSquare className="w-4 h-4 text-emerald-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <div>
                     <p className="text-xs text-brand-text-dim">হোয়াটসঅ্যাপ মেসেজ সহায়তা</p>
                     <p className="text-sm font-semibold text-brand-text">{DEFAULT_SETTINGS.whatsapp_number}</p>
@@ -110,19 +111,19 @@ export function Footer() {
               <div className="flex flex-wrap gap-4 pt-2 text-xs">
                 <button
                   onClick={() => setActiveModal("privacy")}
-                  className="hover:text-brand-gold transition-colors underline"
+                  className="text-brand-text-muted hover:text-brand-gold transition-colors underline"
                 >
                   গোপনীয়তা নীতি (Privacy Policy)
                 </button>
                 <button
                   onClick={() => setActiveModal("terms")}
-                  className="hover:text-brand-gold transition-colors underline"
+                  className="text-brand-text-muted hover:text-brand-gold transition-colors underline"
                 >
                   শর্তাবলী (Terms & Conditions)
                 </button>
                 <button
                   onClick={() => setActiveModal("delivery")}
-                  className="hover:text-brand-gold transition-colors underline"
+                  className="text-brand-text-muted hover:text-brand-gold transition-colors underline"
                 >
                   ডেলিভারি ও রিটার্ন পলিসি
                 </button>
@@ -132,7 +133,12 @@ export function Footer() {
 
           {/* Bottom Bar & Disclaimer */}
           <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brand-text-dim">
-            <p>© {new Date().getFullYear()} {BRAND_NAME}. সর্বস্বত্ব সংরক্ষিত।</p>
+            <div className="flex items-center gap-3">
+              <p>© {new Date().getFullYear()} {BRAND_NAME}. সর্বস্বত্ব সংরক্ষিত।</p>
+              <div className="flex items-center">
+                <ThemeToggle />
+              </div>
+            </div>
             <p className="text-center md:text-right max-w-lg">
               সতর্কবার্তা: এটি একটি খাদ্যতালিকাগত সম্পূরক (Dietary Supplement)। এটি কোনো জটিল রোগ নির্ণয়, চিকিৎসা বা নিরাময়ের জন্য নির্দেশিত নয়।
             </p>
@@ -142,11 +148,11 @@ export function Footer() {
 
       {/* Policy Modals in Bengali */}
       {activeModal && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
           <div className="relative w-full max-w-2xl max-h-[80vh] bg-brand-surface border border-brand-border rounded-2xl p-6 sm:p-8 overflow-y-auto shadow-2xl">
             <button
               onClick={() => setActiveModal(null)}
-              className="absolute top-5 right-5 p-2 rounded-full bg-brand-card hover:bg-white/10 text-brand-text-muted hover:text-white transition-colors"
+              className="absolute top-5 right-5 p-2 rounded-full bg-brand-card hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"
               aria-label="বন্ধ করুন"
             >
               <X className="w-5 h-5" />

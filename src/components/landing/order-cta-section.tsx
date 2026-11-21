@@ -29,7 +29,7 @@ export function OrderCTASection() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Product Image Thumbnail */}
             <div className="lg:col-span-4 flex justify-center">
-              <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-2xl overflow-hidden border border-brand-borderGold bg-black/40 shadow-gold">
+              <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-2xl overflow-hidden border border-brand-borderGold bg-brand-surface shadow-gold">
                 <Image
                   src={INITIAL_PRODUCT_IMAGES[0].url}
                   alt="FORCE FUEL Eagle Endurance"
@@ -73,7 +73,7 @@ export function OrderCTASection() {
                 <div className="flex items-center border border-brand-border rounded-xl bg-brand-card overflow-hidden">
                   <button
                     onClick={handleDecrement}
-                    className="p-2.5 hover:bg-white/10 text-brand-text-muted hover:text-brand-text transition-colors"
+                    className="p-2.5 hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"
                     aria-label="পরিমাণ কমান"
                   >
                     <Minus className="w-4 h-4" />
@@ -83,7 +83,7 @@ export function OrderCTASection() {
                   </span>
                   <button
                     onClick={handleIncrement}
-                    className="p-2.5 hover:bg-white/10 text-brand-text-muted hover:text-brand-text transition-colors"
+                    className="p-2.5 hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"
                     aria-label="পরিমাণ বাড়ান"
                   >
                     <Plus className="w-4 h-4" />

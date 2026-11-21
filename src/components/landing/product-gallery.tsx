@@ -77,7 +77,7 @@ export function ProductGallery({ images = INITIAL_PRODUCT_IMAGES }: GalleryProps
             </button>
 
             {/* Badge Indicator */}
-            <div className="absolute bottom-4 left-4 px-3 py-1.5 rounded-lg bg-black/75 backdrop-blur-sm border border-brand-border text-xs text-brand-text-muted">
+            <div className="absolute bottom-4 left-4 px-3 py-1.5 rounded-lg bg-brand-surface/90 backdrop-blur-sm border border-brand-border text-xs text-brand-text-muted">
               <span>ছবি {currentIndex + 1} / {images.length}</span>
             </div>
           </div>

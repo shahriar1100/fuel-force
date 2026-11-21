@@ -142,7 +142,7 @@ function OrderConfirmationContent() {
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-black/40 border border-brand-border space-y-2 text-sm">
+              <div className="p-4 rounded-xl bg-brand-surface border border-brand-border space-y-2 text-sm">
                 <div className="flex justify-between text-brand-text-muted">
                   <span>পণ্যের মূল্য</span>
                   <span className="text-brand-text font-medium">৳{orderDetails.subtotal}</span>

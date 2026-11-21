@@ -67,7 +67,7 @@ export function CartDrawer() {
               ) : (
                 <div className="space-y-4">
                   <div className="flex gap-4 p-4 rounded-xl bg-brand-card border border-brand-border">
-                    <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-black/40 flex-shrink-0 border border-brand-border">
+                    <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-brand-surface flex-shrink-0 border border-brand-border">
                       <Image
                         src={item.image}
                         alt={item.name}
@@ -94,10 +94,10 @@ export function CartDrawer() {
                       </p>
 
                       <div className="flex items-center justify-between mt-3">
-                        <div className="flex items-center border border-brand-border rounded-lg bg-black/30 overflow-hidden">
+                        <div className="flex items-center border border-brand-border rounded-lg bg-brand-surface overflow-hidden">
                           <button
                             onClick={() => updateQuantity(item.quantity - 1)}
-                            className="p-1.5 hover:bg-white/10 text-brand-text-muted hover:text-brand-text transition-colors"
+                            className="p-1.5 hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"
                             aria-label="পরিমাণ কমান"
                           >
                             <Minus className="w-3.5 h-3.5" />
@@ -107,7 +107,7 @@ export function CartDrawer() {
                           </span>
                           <button
                             onClick={() => updateQuantity(item.quantity + 1)}
-                            className="p-1.5 hover:bg-white/10 text-brand-text-muted hover:text-brand-text transition-colors"
+                            className="p-1.5 hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"
                             aria-label="পরিমাণ বাড়ান"
                           >
                             <Plus className="w-3.5 h-3.5" />

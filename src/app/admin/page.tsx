@@ -513,7 +513,7 @@ export default function AdminDashboardPage() {
                               <div className="flex items-center justify-center gap-2">
                                 <button
                                   onClick={() => setSelectedOrder(o)}
-                                  className="p-1.5 rounded-lg bg-brand-card hover:bg-white/10 text-brand-text-muted hover:text-brand-text transition-colors"
+                                  className="p-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"
                                   title="অর্ডার বিবরণ দেখুন"
                                 >
                                   <Edit className="w-4 h-4" />
@@ -522,7 +522,7 @@ export default function AdminDashboardPage() {
                                 <Link
                                   href={`/admin/invoice/${encodeURIComponent(o.order_number)}`}
                                   target="_blank"
-                                  className="p-1.5 rounded-lg bg-brand-card hover:bg-white/10 text-brand-gold transition-colors"
+                                  className="p-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover text-brand-gold transition-colors"
                                   title="ইনভয়েস প্রিন্ট করুন"
                                 >
                                   <Printer className="w-4 h-4" />
@@ -789,7 +789,7 @@ export default function AdminDashboardPage() {
               </div>
               <button
                 onClick={() => setSelectedOrder(null)}
-                className="p-2 rounded-full hover:bg-white/10 text-brand-text-muted hover:text-white"
+                className="p-2 rounded-full hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"
               >
                 ✕
               </button>
@@ -862,7 +862,7 @@ export default function AdminDashboardPage() {
               </Link>
               <button
                 onClick={() => setSelectedOrder(null)}
-                className="px-5 py-2.5 rounded-xl bg-brand-card border border-brand-border text-brand-text text-xs font-bold hover:bg-white/10"
+                className="px-5 py-2.5 rounded-xl bg-brand-card border border-brand-border text-brand-text text-xs font-bold hover:bg-brand-cardHover transition-colors"
               >
                 বন্ধ করুন
               </button>

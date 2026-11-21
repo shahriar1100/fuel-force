@@ -260,7 +260,7 @@ function CheckoutContent() {
 
                 {/* Product Item */}
                 <div className="flex gap-4 items-center">
-                  <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-black/40 border border-brand-border flex-shrink-0">
+                  <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-brand-card border border-brand-border flex-shrink-0">
                     <Image
                       src={INITIAL_PRODUCT_IMAGES[0].url}
                       alt="FORCE FUEL Eagle Endurance"
@@ -283,11 +283,11 @@ function CheckoutContent() {
                 {/* Quantity Control on Checkout */}
                 <div className="p-3 rounded-xl bg-brand-card border border-brand-border flex items-center justify-between">
                   <span className="text-xs font-semibold text-brand-text">পরিমাণ:</span>
-                  <div className="flex items-center border border-brand-border rounded-lg bg-black/30 overflow-hidden">
+                  <div className="flex items-center border border-brand-border rounded-lg bg-brand-surface overflow-hidden">
                     <button
                       type="button"
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      className="p-1.5 hover:bg-white/10 text-brand-text-muted hover:text-brand-text transition-colors"
+                      className="p-1.5 hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"
                       aria-label="পরিমাণ কমান"
                     >
                       <Minus className="w-3.5 h-3.5" />
@@ -298,7 +298,7 @@ function CheckoutContent() {
                     <button
                       type="button"
                       onClick={() => setQuantity((q) => Math.min(20, q + 1))}
-                      className="p-1.5 hover:bg-white/10 text-brand-text-muted hover:text-brand-text transition-colors"
+                      className="p-1.5 hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"
                       aria-label="পরিমাণ বাড়ান"
                     >
                       <Plus className="w-3.5 h-3.5" />
