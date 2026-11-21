@@ -20,11 +20,11 @@ export function IngredientsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
           {VERIFIED_INGREDIENTS.map((ingredient) => (
             <div
               key={ingredient.name}
-              className="relative p-8 rounded-3xl bg-brand-surface border border-brand-border hover:border-brand-borderGold transition-all duration-300 shadow-luxury group"
+              className="relative p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-brand-surface border border-brand-border hover:border-brand-borderGold transition-all duration-300 shadow-luxury group"
             >
               <div className="flex items-center justify-between mb-6">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-card to-black border border-brand-border flex items-center justify-center group-hover:border-brand-gold/40 transition-colors">

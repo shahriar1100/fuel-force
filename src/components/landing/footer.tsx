@@ -133,7 +133,7 @@ export function Footer() {
 
           {/* Bottom Bar & Disclaimer */}
           <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brand-text-dim">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
               <p>© {new Date().getFullYear()} {BRAND_NAME}. সর্বস্বত্ব সংরক্ষিত।</p>
               <div className="flex items-center">
                 <ThemeToggle />
@@ -148,8 +148,8 @@ export function Footer() {
 
       {/* Policy Modals in Bengali */}
       {activeModal && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative w-full max-w-2xl max-h-[80vh] bg-brand-surface border border-brand-border rounded-2xl p-6 sm:p-8 overflow-y-auto shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
+          <div className="relative w-full max-w-2xl max-h-[85vh] bg-brand-surface border border-brand-border rounded-2xl p-4 sm:p-8 overflow-y-auto shadow-2xl">
             <button
               onClick={() => setActiveModal(null)}
               className="absolute top-5 right-5 p-2 rounded-full bg-brand-card hover:bg-brand-cardHover text-brand-text-muted hover:text-brand-text transition-colors"

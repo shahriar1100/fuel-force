@@ -135,7 +135,7 @@ function CheckoutContent() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Left Column: Customer Delivery Form */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="p-6 sm:p-8 rounded-3xl bg-brand-surface border border-brand-border shadow-luxury space-y-5">
+              <div className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-brand-surface border border-brand-border shadow-luxury space-y-5">
                 <div className="flex items-center justify-between pb-4 border-b border-brand-border">
                   <h2 className="text-lg font-bold text-brand-text">১. ডেলিভারির তথ্য</h2>
                   <span className="text-xs text-brand-gold font-semibold uppercase">
@@ -228,7 +228,7 @@ function CheckoutContent() {
               </div>
 
               {/* Payment Method Section: Cash on Delivery ONLY */}
-              <div className="p-6 rounded-3xl bg-brand-surface border border-brand-border space-y-3">
+              <div className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-brand-surface border border-brand-border space-y-3">
                 <div className="flex items-center justify-between pb-3 border-b border-brand-border">
                   <h2 className="text-lg font-bold text-brand-text">২. পেমেন্ট পদ্ধতি</h2>
                   <span className="text-xs text-brand-gold font-semibold uppercase">ক্যাশ অন ডেলিভারি</span>
@@ -253,7 +253,7 @@ function CheckoutContent() {
 
             {/* Right Column: Order Summary & Confirm Button */}
             <div className="lg:col-span-5">
-              <div className="p-6 sm:p-8 rounded-3xl bg-brand-surface border border-brand-borderGold shadow-luxury sticky top-28 space-y-6">
+              <div className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-brand-surface border border-brand-borderGold shadow-luxury lg:sticky top-28 space-y-5 sm:space-y-6">
                 <h2 className="text-lg font-bold text-brand-text pb-4 border-b border-brand-border">
                   অর্ডার বিবরণী
                 </h2>

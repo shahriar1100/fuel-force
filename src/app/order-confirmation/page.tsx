@@ -52,40 +52,40 @@ function OrderConfirmationContent() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-bg py-12 sm:py-20">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between pb-6 mb-6 border-b border-brand-border">
+    <div className="min-h-screen bg-brand-bg py-8 sm:py-20">
+      <div className="max-w-3xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between pb-4 sm:pb-6 mb-6 border-b border-brand-border">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-brand-text-muted hover:text-brand-gold transition-colors"
+            className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-brand-text-muted hover:text-brand-gold transition-colors"
           >
-            ← মূল পেজে ফিরে যান
+            ← মূল পেজে যান
           </Link>
-          <div className="flex items-center gap-3">
-            <span className="font-extrabold text-base text-brand-text tracking-widest font-display">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="font-extrabold text-sm sm:text-base text-brand-text tracking-widest font-display">
               {BRAND_NAME}
             </span>
             <ThemeToggle />
           </div>
         </div>
 
-        <div className="text-center mb-8">
-          <div className="w-20 h-20 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto mb-5 shadow-luxury">
-            <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4 sm:mb-5 shadow-luxury">
+            <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-400" />
           </div>
           <span className="text-xs font-bold tracking-widest text-brand-gold uppercase">
             অর্ডার সফল হয়েছে
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-brand-text font-display mt-1">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-brand-text font-display mt-1">
             ধন্যবাদ! আপনার অর্ডারটি গৃহীত হয়েছে
           </h1>
-          <p className="text-sm sm:text-base text-brand-text-muted mt-2 max-w-lg mx-auto">
+          <p className="text-xs sm:text-base text-brand-text-muted mt-2 max-w-lg mx-auto">
             <strong className="text-brand-text">{BRAND_NAME}</strong> এর জন্য আপনার অর্ডারটি আমাদের সিস্টেমে যুক্ত হয়েছে। আমাদের টিম পার্সেলটি প্যাক করে কুরিয়ারে পাঠানোর প্রস্তুতি নিচ্ছে।
           </p>
         </div>
 
         {/* Order ID Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-brand-surface border border-brand-borderGold shadow-luxury mb-8">
+        <div className="p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-brand-surface border border-brand-borderGold shadow-luxury mb-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-brand-card border border-brand-border mb-6">
             <div>
               <p className="text-xs text-brand-text-muted uppercase tracking-wider font-semibold">

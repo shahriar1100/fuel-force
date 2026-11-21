@@ -38,29 +38,29 @@ export function Header() {
           : "bg-transparent py-5"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-brand-gold to-brand-purple flex items-center justify-center p-0.5 shadow-gold">
+          <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-brand-gold to-brand-purple flex items-center justify-center p-0.5 shadow-gold">
               <div className="w-full h-full bg-brand-bg rounded-[7px] flex items-center justify-center">
-                <span className="text-brand-gold font-black tracking-wider text-sm group-hover:scale-105 transition-transform">
+                <span className="text-brand-gold font-black tracking-wider text-xs sm:text-sm group-hover:scale-105 transition-transform">
                   FF
                 </span>
               </div>
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold tracking-widest text-lg sm:text-xl text-brand-text font-display">
+              <span className="font-extrabold tracking-widest text-base sm:text-xl text-brand-text font-display">
                 {BRAND_NAME}
               </span>
-              <span className="text-[10px] tracking-widest text-brand-gold uppercase font-semibold">
+              <span className="text-[9px] sm:text-[10px] tracking-widest text-brand-gold uppercase font-semibold">
                 ঈগল এন্ডুরেন্স
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -73,7 +73,7 @@ export function Header() {
           </nav>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <a
               href={`tel:${DEFAULT_SETTINGS.contact_phone}`}
               className="hidden lg:flex items-center gap-2 text-xs font-semibold text-brand-text-muted hover:text-brand-gold px-3 py-1.5 rounded-lg border border-brand-border hover:border-brand-gold/40 transition-colors"
@@ -88,10 +88,10 @@ export function Header() {
             {/* Cart Trigger */}
             <button
               onClick={openCart}
-              className="relative p-2.5 rounded-xl bg-brand-surface border border-brand-border hover:border-brand-gold/40 text-brand-text transition-all hover:shadow-gold"
+              className="relative p-2 sm:p-2.5 rounded-xl bg-brand-surface border border-brand-border hover:border-brand-gold/40 text-brand-text transition-all hover:shadow-gold"
               aria-label="শপিং ব্যাগ দেখুন"
             >
-              <ShoppingBag className="w-5 h-5 text-brand-gold" />
+              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-brand-gold" />
               {totalQuantity > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gold-gradient text-black font-extrabold text-[11px] flex items-center justify-center shadow-md animate-bounce">
                   {totalQuantity}
@@ -102,10 +102,10 @@ export function Header() {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2.5 rounded-xl bg-brand-surface border border-brand-border text-brand-text"
+              className="md:hidden p-2 sm:p-2.5 rounded-xl bg-brand-surface border border-brand-border text-brand-text"
               aria-label="মেনু খুলুন/বন্ধ করুন"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
             </button>
           </div>
         </div>

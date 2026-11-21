@@ -53,15 +53,15 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-bg flex items-center justify-center p-4">
+    <div className="min-h-screen bg-brand-bg flex items-center justify-center p-3 sm:p-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-gold to-brand-purple p-0.5 mx-auto mb-4 shadow-gold">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-brand-gold to-brand-purple p-0.5 mx-auto mb-3 sm:mb-4 shadow-gold">
             <div className="w-full h-full bg-brand-bg rounded-[14px] flex items-center justify-center">
-              <Shield className="w-6 h-6 text-brand-gold" />
+              <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-brand-gold" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold text-brand-text font-display">
+          <h1 className="text-xl sm:text-2xl font-bold text-brand-text font-display">
             {BRAND_NAME} অ্যাডমিন পোর্টাল
           </h1>
           <p className="text-xs text-brand-text-muted mt-1">
@@ -69,7 +69,7 @@ export default function AdminLoginPage() {
           </p>
         </div>
 
-        <div className="p-8 rounded-3xl bg-brand-surface border border-brand-border shadow-luxury">
+        <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-brand-surface border border-brand-border shadow-luxury">
           {error && (
             <div className="mb-6 p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 flex items-start gap-2.5 text-xs text-red-400">
               <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />

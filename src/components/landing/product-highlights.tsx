@@ -51,7 +51,7 @@ export function ProductHighlights() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {highlights.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -61,7 +61,7 @@ export function ProductHighlights() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="relative p-6 rounded-2xl bg-brand-card border border-brand-border hover:border-brand-borderGold transition-all duration-300 hover:shadow-luxury group flex flex-col justify-between"
+                className="relative p-5 sm:p-6 rounded-2xl bg-brand-card border border-brand-border hover:border-brand-borderGold transition-all duration-300 hover:shadow-luxury group flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">

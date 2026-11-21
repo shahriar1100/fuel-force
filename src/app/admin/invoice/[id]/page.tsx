@@ -69,10 +69,10 @@ export default function InvoicePage({ params }: { params: Promise<{ id: string }
     <div className="min-h-screen bg-neutral-100 py-8 print:py-0 print:bg-white text-neutral-900 font-sans">
       <div className="max-w-3xl mx-auto px-4 print:px-0">
         {/* Screen-only Print Bar */}
-        <div className="mb-6 flex items-center justify-between print:hidden">
+        <div className="mb-6 flex items-center justify-between gap-3 print:hidden">
           <Link
             href="/admin"
-            className="inline-flex items-center gap-1.5 text-sm text-neutral-600 hover:text-black font-medium"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-neutral-600 hover:text-black font-medium"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>অ্যাডমিনে ফিরে যান</span>
@@ -80,19 +80,19 @@ export default function InvoicePage({ params }: { params: Promise<{ id: string }
 
           <button
             onClick={() => window.print()}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white rounded-lg text-sm font-bold shadow hover:bg-neutral-800 transition-colors"
+            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-black text-white rounded-lg text-xs sm:text-sm font-bold shadow hover:bg-neutral-800 transition-colors"
           >
             <Printer className="w-4 h-4" />
-            <span>ইনভয়েস প্রিন্ট করুন</span>
+            <span>ইনভয়েস প্রিন্ট</span>
           </button>
         </div>
 
         {/* Invoice Paper Canvas */}
-        <div className="bg-white p-8 sm:p-12 rounded-xl shadow-lg print:shadow-none border border-neutral-200 print:border-none">
+        <div className="bg-white p-4 sm:p-8 md:p-12 rounded-xl shadow-lg print:shadow-none border border-neutral-200 print:border-none">
           {/* Header */}
-          <div className="flex justify-between items-start border-b border-neutral-300 pb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 border-b border-neutral-300 pb-6">
             <div>
-              <h1 className="text-2xl font-black tracking-tight">{BRAND_NAME}</h1>
+              <h1 className="text-xl sm:text-2xl font-black tracking-tight">{BRAND_NAME}</h1>
               <p className="text-xs text-neutral-500 uppercase tracking-widest font-semibold mt-0.5">
                 {PRODUCT_NAME} ({PRODUCT_NAME_BN})
               </p>
@@ -101,7 +101,7 @@ export default function InvoicePage({ params }: { params: Promise<{ id: string }
               </p>
             </div>
 
-            <div className="text-right">
+            <div className="sm:text-right">
               <span className="inline-block px-3 py-1 bg-neutral-100 text-neutral-800 font-bold text-xs uppercase tracking-wider rounded border border-neutral-300">
                 ক্যাশ অন ডেলিভারি (COD)
               </span>
@@ -111,7 +111,7 @@ export default function InvoicePage({ params }: { params: Promise<{ id: string }
           </div>
 
           {/* Customer / Shipping Info */}
-          <div className="grid grid-cols-2 gap-8 py-6 border-b border-neutral-300 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 py-6 border-b border-neutral-300 text-sm">
             <div>
               <p className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-1">
                 গ্রাহকের নাম ও মোবাইল
@@ -130,8 +130,8 @@ export default function InvoicePage({ params }: { params: Promise<{ id: string }
           </div>
 
           {/* Items Table */}
-          <div className="py-6">
-            <table className="w-full text-left border-collapse text-sm">
+          <div className="py-6 overflow-x-auto">
+            <table className="w-full text-left border-collapse text-sm min-w-[450px]">
               <thead>
                 <tr className="border-b border-neutral-300 text-xs uppercase font-bold text-neutral-500">
                   <th className="py-2">পণ্যের বিবরণ</th>

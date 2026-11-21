@@ -50,12 +50,12 @@ export function HeroSection() {
               </div>
 
               {/* Floating Verified Extract Badge */}
-              <div className="absolute bottom-6 left-6 right-6 p-3.5 rounded-xl bg-brand-bg/90 backdrop-blur-md border border-brand-border flex items-center justify-between text-xs text-brand-text">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-brand-gold animate-pulse" />
-                  <span className="font-semibold text-brand-text">স্ট্যান্ডার্ডাইজড G115® ও KSM-66®</span>
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-6 p-2.5 sm:p-3.5 rounded-xl bg-brand-bg/90 backdrop-blur-md border border-brand-border flex items-center justify-between text-[11px] sm:text-xs text-brand-text">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-brand-gold animate-pulse flex-shrink-0" />
+                  <span className="font-semibold text-brand-text truncate">G115® ও KSM-66®</span>
                 </div>
-                <span className="text-brand-gold font-bold">পূর্ণ ৬০ ডোজ</span>
+                <span className="text-brand-gold font-bold flex-shrink-0">পূর্ণ ৬০ ডোজ</span>
               </div>
             </div>
           </motion.div>
@@ -65,7 +65,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="lg:col-span-6 flex flex-col space-y-6"
+            className="lg:col-span-6 flex flex-col space-y-5 sm:space-y-6"
           >
             {/* Category / Brand Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-surface border border-brand-border w-fit text-xs text-brand-gold font-semibold uppercase tracking-wider">
@@ -75,30 +75,30 @@ export function HeroSection() {
 
             {/* Product Title */}
             <div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-text tracking-tight font-display leading-[1.15]">
+              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-brand-text tracking-tight font-display leading-[1.15]">
                 {PRODUCT_NAME}
               </h1>
-              <p className="mt-2 text-base sm:text-lg text-brand-gold font-medium">
+              <p className="mt-1.5 sm:mt-2 text-sm sm:text-lg text-brand-gold font-medium">
                 {PRODUCT_NAME_BN}
               </p>
-              <p className="mt-1 text-sm sm:text-base text-brand-text-muted">
+              <p className="mt-1 text-xs sm:text-base text-brand-text-muted">
                 {PRODUCT_SUBTITLE}
               </p>
             </div>
 
             {/* Verified Packaging Callouts */}
-            <div className="grid grid-cols-3 gap-2.5 py-2">
-              <div className="p-3 rounded-xl bg-brand-card border border-brand-border text-center">
-                <p className="text-xs text-brand-text-muted">জিনসেং ফর্মুলা</p>
-                <p className="text-sm font-bold text-brand-gold mt-0.5">G115® এক্সট্রাক্ট</p>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 py-2">
+              <div className="p-2 sm:p-3 rounded-xl bg-brand-card border border-brand-border text-center">
+                <p className="text-[10px] sm:text-xs text-brand-text-muted">জিনসেং ফর্মুলা</p>
+                <p className="text-xs sm:text-sm font-bold text-brand-gold mt-0.5 truncate">G115® এক্সট্রাক্ট</p>
               </div>
-              <div className="p-3 rounded-xl bg-brand-card border border-brand-border text-center">
-                <p className="text-xs text-brand-text-muted">অশ্বগন্ধা মূল</p>
-                <p className="text-sm font-bold text-brand-purple-light mt-0.5">KSM-66®</p>
+              <div className="p-2 sm:p-3 rounded-xl bg-brand-card border border-brand-border text-center">
+                <p className="text-[10px] sm:text-xs text-brand-text-muted">অশ্বগন্ধা মূল</p>
+                <p className="text-xs sm:text-sm font-bold text-brand-purple-light mt-0.5 truncate">KSM-66®</p>
               </div>
-              <div className="p-3 rounded-xl bg-brand-card border border-brand-border text-center">
-                <p className="text-xs text-brand-text-muted">মোট ডোজ</p>
-                <p className="text-sm font-bold text-brand-text mt-0.5">৬০ ক্যাপসুল</p>
+              <div className="p-2 sm:p-3 rounded-xl bg-brand-card border border-brand-border text-center">
+                <p className="text-[10px] sm:text-xs text-brand-text-muted">মোট ডোজ</p>
+                <p className="text-xs sm:text-sm font-bold text-brand-text mt-0.5 truncate">৬০ ক্যাপসুল</p>
               </div>
             </div>
 
@@ -151,38 +151,38 @@ export function HeroSection() {
               </div>
 
               {/* CTA Buttons */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5 pt-2">
                 <button
                   onClick={() => buyNow(quantity)}
-                  className="w-full flex items-center justify-center gap-2 py-4 px-6 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-black font-extrabold text-base shadow-gold transition-all duration-200 active:scale-[0.98]"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 sm:py-4 px-4 sm:px-6 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-black font-extrabold text-sm sm:text-base shadow-gold transition-all duration-200 active:scale-[0.98]"
                 >
-                  <Zap className="w-5 h-5 fill-black" />
-                  <span>এখনই অর্ডার করুন (ক্যাশ অন ডেলিভারি)</span>
+                  <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-black flex-shrink-0" />
+                  <span>এখনই অর্ডার করুন (COD)</span>
                 </button>
 
                 <button
                   onClick={() => addToCart(quantity)}
-                  className="w-full flex items-center justify-center gap-2 py-4 px-6 rounded-xl bg-brand-surface hover:bg-brand-cardHover border border-brand-borderGold text-brand-text font-bold text-base transition-all duration-200 active:scale-[0.98]"
+                  className="w-full flex items-center justify-center gap-2 py-3.5 sm:py-4 px-4 sm:px-6 rounded-xl bg-brand-surface hover:bg-brand-cardHover border border-brand-borderGold text-brand-text font-bold text-sm sm:text-base transition-all duration-200 active:scale-[0.98]"
                 >
-                  <ShoppingBag className="w-5 h-5 text-brand-gold" />
+                  <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-brand-gold flex-shrink-0" />
                   <span>ব্যাগে যোগ করুন</span>
                 </button>
               </div>
             </div>
 
             {/* Trust Bullet Points */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t border-brand-border text-xs text-brand-text-muted">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-brand-border text-xs text-brand-text-muted">
+              <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-brand-gold flex-shrink-0" />
                 <span>১০০% আসল সিল্ড বোতল</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-brand-gold flex-shrink-0" />
                 <span>নিরাপদ ক্যাশ অন ডেলিভারি</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-brand-gold flex-shrink-0" />
-                <span>সারা বাংলাদেশে হোম ডেলিভারি</span>
+                <span>সারা দেশে হোম ডেলিভারি</span>
               </div>
             </div>
           </motion.div>

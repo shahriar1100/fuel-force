@@ -63,17 +63,17 @@ export function ProductGallery({ images = INITIAL_PRODUCT_IMAGES }: GalleryProps
             {/* Navigation Arrows for Main View */}
             <button
               onClick={handlePrev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-brand-bg/80 hover:bg-brand-bg backdrop-blur-md border border-brand-border text-brand-text hover:text-brand-gold transition-all opacity-0 group-hover:opacity-100"
+              className="absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-2.5 rounded-full bg-brand-bg/80 hover:bg-brand-bg backdrop-blur-md border border-brand-border text-brand-text hover:text-brand-gold transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
               aria-label="পূর্ববর্তী ছবি"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-brand-bg/80 hover:bg-brand-bg backdrop-blur-md border border-brand-border text-brand-text hover:text-brand-gold transition-all opacity-0 group-hover:opacity-100"
+              className="absolute right-2.5 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-2.5 rounded-full bg-brand-bg/80 hover:bg-brand-bg backdrop-blur-md border border-brand-border text-brand-text hover:text-brand-gold transition-all opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
               aria-label="পরবর্তী ছবি"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
             {/* Badge Indicator */}
@@ -116,24 +116,32 @@ export function ProductGallery({ images = INITIAL_PRODUCT_IMAGES }: GalleryProps
 
       {/* Lightbox Modal */}
       {isLightboxOpen && (
-        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex items-center justify-center p-2 sm:p-4">
           <button
             onClick={() => setIsLightboxOpen(false)}
-            className="absolute top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+            className="absolute top-3 right-3 sm:top-6 sm:right-6 p-2 sm:p-3 rounded-full bg-white/15 hover:bg-white/25 text-white transition-colors z-20"
             aria-label="বন্ধ করুন"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           <button
             onClick={handlePrev}
-            className="absolute left-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-white/15 hover:bg-white/25 text-white transition-colors z-20"
             aria-label="পূর্ববর্তী ছবি"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
-          <div className="relative max-w-5xl max-h-[85vh] w-full h-[75vh] flex items-center justify-center">
+          <button
+            onClick={handleNext}
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-white/15 hover:bg-white/25 text-white transition-colors z-20"
+            aria-label="পরবর্তী ছবি"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+
+          <div className="relative max-w-5xl max-h-[85vh] w-full h-[70vh] sm:h-[75vh] flex items-center justify-center">
             <Image
               src={activeImage.url}
               alt={activeImage.alt || "FORCE FUEL পূর্ণ ভিউ"}

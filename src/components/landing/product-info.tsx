@@ -19,9 +19,9 @@ export function ProductInfo() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
           {/* Usage Protocol */}
-          <div className="p-8 rounded-3xl bg-brand-card border border-brand-border shadow-luxury flex flex-col justify-between">
+          <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-brand-card border border-brand-border shadow-luxury flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-2xl bg-brand-surface border border-brand-border flex items-center justify-center">
@@ -61,7 +61,7 @@ export function ProductInfo() {
           </div>
 
           {/* Safety Warnings & Disclaimers */}
-          <div className="p-8 rounded-3xl bg-brand-card border border-brand-border shadow-luxury flex flex-col justify-between">
+          <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-brand-card border border-brand-border shadow-luxury flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-2xl bg-brand-purple/20 border border-brand-purple/40 flex items-center justify-center">
