@@ -14,6 +14,12 @@ export const DEFAULT_SETTINGS = {
   announcement_text: "আজকের অর্ডারে নিশ্চিত ক্যাশ অন ডেলিভারি ও দ্রুততম সময়ে হোম ডেলিভারি!",
   announcement_enabled: true,
   facebook_pixel_id: "",
+  courier_provider: "steadfast",
+  steadfast_api_key: "",
+  steadfast_secret_key: "",
+  pathao_client_id: "",
+  pathao_client_secret: "",
+  pathao_store_id: "",
 };
 
 export const INITIAL_PRODUCT_IMAGES = [

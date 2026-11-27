@@ -90,9 +90,17 @@ export default function AdminDashboardPage() {
     announcement_text: "আজকের অর্ডারে নিশ্চিত ক্যাশ অন ডেলিভারি ও দ্রুততম সময়ে হোম ডেলিভারি!",
     announcement_enabled: true,
     facebook_pixel_id: "",
+    courier_provider: "steadfast",
+    steadfast_api_key: "",
+    steadfast_secret_key: "",
   });
   const [savingSettings, setSavingSettings] = useState(false);
   const [settingsMessage, setSettingsMessage] = useState<string | null>(null);
+
+  // 1-Click Courier Integration States
+  const [bookingCourierId, setBookingCourierId] = useState<string | null>(null);
+  const [checkingBalance, setCheckingBalance] = useState(false);
+  const [balanceMessage, setBalanceMessage] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -335,6 +343,69 @@ export default function AdminDashboardPage() {
         `আপনার ঠিকানা ও অর্ডারটি দ্রুত কনফার্ম করার জন্য অনুগ্রহ করে এই মেসেজে একটি 'হ্যাঁ' অথবা 'OK' লিখে রিপ্লাই করুন। ধন্যবাদ!`
     );
     window.open(`https://wa.me/${bdNumber}?text=${msg}`, "_blank");
+  };
+
+  const handleSendToCourier = async (orderId: string) => {
+    setBookingCourierId(orderId);
+    try {
+      const res = await fetch("/api/admin/courier/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setOrders((prev) =>
+          prev.map((o) =>
+            o.id === orderId || o.order_number === orderId
+              ? {
+                  ...o,
+                  order_status: "Shipped",
+                  courier_name: "Steadfast",
+                  courier_tracking_id: data.tracking_code,
+                }
+              : o
+          )
+        );
+        if (selectedOrder && (selectedOrder.id === orderId || selectedOrder.order_number === orderId)) {
+          setSelectedOrder((prev: any) => ({
+            ...prev,
+            order_status: "Shipped",
+            courier_name: "Steadfast",
+            courier_tracking_id: data.tracking_code,
+          }));
+          setCourierTrackingId(data.tracking_code);
+          setCourierName("Steadfast");
+        }
+        alert(`স্টেডফাস্ট কুরিয়ারে সফলভাবে বুকিং সম্পন্ন হয়েছে!\nট্র্যাকিং কোড: ${data.tracking_code}\nস্ট্যাটাস 'Shipped'-এ পরিবর্তিত হয়েছে।`);
+      } else {
+        alert(`কুরিয়ার বুকিং ব্যর্থ হয়েছে: ${data.message || "ত্রুটি ঘটেছে"}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("কুরিয়ারে বুকিং করতে সমস্যা হয়েছে");
+    } finally {
+      setBookingCourierId(null);
+    }
+  };
+
+  const handleCheckBalance = async () => {
+    setCheckingBalance(true);
+    setBalanceMessage(null);
+    try {
+      const res = await fetch("/api/admin/courier/balance");
+      const data = await res.json();
+      if (data.success) {
+        setBalanceMessage(`বর্তমান স্টেডফাস্ট ব্যালেন্স: ৳${Number(data.current_balance || 0).toLocaleString("bn-BD")}`);
+      } else {
+        setBalanceMessage(data.message || "ব্যালেন্স চেক করা সম্ভব হয়নি। অনুগ্রহ করে API Key ও Secret Key সঠিক আছে কিনা নিশ্চিত করুন।");
+      }
+    } catch (err) {
+      console.error(err);
+      setBalanceMessage("ব্যালেন্স দেখতে সমস্যা হয়েছে।");
+    } finally {
+      setCheckingBalance(false);
+    }
   };
 
   const handleSaveProduct = async (e: React.FormEvent) => {
@@ -802,10 +873,30 @@ export default function AdminDashboardPage() {
                           </div>
                         )}
 
-                        {o.courier_tracking_id && (
-                          <p className="text-[11px] text-indigo-400 font-mono">
-                            কুরিয়ার ট্র্যাকিং: {o.courier_tracking_id}
-                          </p>
+                        {o.courier_tracking_id ? (
+                          <div className="flex items-center justify-between p-2 rounded-lg bg-indigo-500/10 border border-indigo-500/25">
+                            <span className="text-[11px] text-indigo-400 font-mono font-bold flex items-center gap-1">
+                              <Truck className="w-3 h-3" /> {o.courier_tracking_id}
+                            </span>
+                            <a
+                              href={`https://steadfast.com.bd/t/${encodeURIComponent(o.courier_tracking_id)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[11px] text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-0.5 underline"
+                            >
+                              ট্র্যাক করুন <ExternalLink className="w-2.5 h-2.5" />
+                            </a>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            disabled={bookingCourierId === o.id}
+                            onClick={() => handleSendToCourier(o.id)}
+                            className="w-full py-2 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/35 border border-emerald-500/40 text-emerald-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-all disabled:opacity-50"
+                          >
+                            <Truck className="w-3.5 h-3.5" />
+                            <span>{bookingCourierId === o.id ? "কুরিয়ারে পাঠানো হচ্ছে..." : "১-ক্লিকে কুরিয়ারে পাঠান"}</span>
+                          </button>
                         )}
                       </div>
 
@@ -955,15 +1046,33 @@ export default function AdminDashboardPage() {
                             </td>
                             <td className="p-3.5 text-xs">
                               {o.courier_tracking_id ? (
-                                <span className="inline-block px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 font-mono text-[11px] truncate max-w-[120px]">
-                                  {o.courier_tracking_id}
-                                </span>
-                              ) : o.admin_notes ? (
-                                <span className="text-amber-400/90 truncate max-w-[120px] block" title={o.admin_notes}>
-                                  {o.admin_notes}
-                                </span>
+                                <a
+                                  href={`https://steadfast.com.bd/t/${encodeURIComponent(o.courier_tracking_id)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-500/15 border border-indigo-500/30 text-indigo-400 font-mono text-[11px] font-bold hover:underline"
+                                  title="Steadfast এ লাইভ ট্র্যাক করুন"
+                                >
+                                  <Truck className="w-3 h-3 text-indigo-400" />
+                                  <span className="truncate max-w-[90px]">{o.courier_tracking_id}</span>
+                                  <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+                                </a>
                               ) : (
-                                <span className="text-brand-text-dim text-[11px]">—</span>
+                                <button
+                                  type="button"
+                                  disabled={bookingCourierId === o.id}
+                                  onClick={() => handleSendToCourier(o.id)}
+                                  className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/35 border border-emerald-500/40 text-emerald-300 font-bold text-[11px] transition-all whitespace-nowrap disabled:opacity-50"
+                                  title="১-ক্লিকে স্টেডফাস্ট কুরিয়ারে সরাসরি অর্ডারটি পাঠান"
+                                >
+                                  <Truck className="w-3 h-3" />
+                                  <span>{bookingCourierId === o.id ? "বুকিং..." : "১-ক্লিক কুরিয়ার"}</span>
+                                </button>
+                              )}
+                              {o.admin_notes && (
+                                <p className="text-[11px] text-amber-400/90 truncate max-w-[140px] mt-1" title={o.admin_notes}>
+                                  নোট: {o.admin_notes}
+                                </p>
                               )}
                             </td>
                             <td className="p-3.5 text-center">
@@ -1356,6 +1465,76 @@ export default function AdminDashboardPage() {
                 </p>
               </div>
 
+              {/* Courier API Integration Section (Steadfast Courier) */}
+              <div className="pt-4 border-t border-brand-border/60 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+                      <Truck className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-brand-text uppercase tracking-wider flex items-center gap-2">
+                        <span>১-ক্লিক কুরিয়ার ইন্টিগ্রেশন (Steadfast Courier API)</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                          অটোমেশন
+                        </span>
+                      </h4>
+                      <p className="text-xs text-brand-text-muted">
+                        স্টেডফাস্ট পোর্টাল (portal.steadfast.com.bd) থেকে আপনার API Key ও Secret Key বসান।
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleCheckBalance}
+                    disabled={checkingBalance}
+                    className="self-start sm:self-auto px-3.5 py-1.5 rounded-lg bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs text-brand-gold font-bold transition-colors flex items-center gap-1.5"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${checkingBalance ? "animate-spin" : ""}`} />
+                    <span>{checkingBalance ? "চেক হচ্ছে..." : "ব্যালেন্স চেক"}</span>
+                  </button>
+                </div>
+
+                {balanceMessage && (
+                  <div className="p-3.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-xs text-emerald-300 font-medium">
+                    {balanceMessage}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-brand-text-muted mb-2 uppercase tracking-wider">
+                      Steadfast API Key
+                    </label>
+                    <input
+                      type="text"
+                      value={settings.steadfast_api_key || ""}
+                      onChange={(e) => setSettings({ ...settings, steadfast_api_key: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl bg-brand-card border border-brand-border text-sm font-mono text-brand-text focus:outline-none focus:ring-1 focus:ring-brand-gold"
+                      placeholder="যেমন: abcdef1234567890..."
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-brand-text-muted mb-2 uppercase tracking-wider">
+                      Steadfast Secret Key
+                    </label>
+                    <input
+                      type="password"
+                      value={settings.steadfast_secret_key || ""}
+                      onChange={(e) => setSettings({ ...settings, steadfast_secret_key: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl bg-brand-card border border-brand-border text-sm font-mono text-brand-text focus:outline-none focus:ring-1 focus:ring-brand-gold"
+                      placeholder="••••••••••••••••••••"
+                    />
+                  </div>
+                </div>
+
+                <p className="text-[11px] text-brand-text-dim leading-relaxed">
+                  * বিঃদ্রঃ API কী ছাড়া টেস্ট করলেও সিস্টেম ডেমো বুকিং এবং ট্র্যাকিং কোড তৈরি করবে যাতে আপনি এখনই টেস্ট করতে পারেন। আসল ডেলিভারির জন্য Steadfast Portal &gt; Settings &gt; API Information থেকে কী সংগ্রহ করে এখানে সেভ করুন।
+                </p>
+              </div>
+
               <button
                 type="submit"
                 disabled={savingSettings}
@@ -1475,6 +1654,69 @@ export default function AdminDashboardPage() {
                   placeholder="যেমন: গ্রাহক ফোন রিসিভ করেছেন, রবিবার সকাল ১০টায় ডেলিভারি চেয়েছেন..."
                   className="w-full px-3 py-2 rounded-lg bg-brand-surface border border-brand-border text-xs text-brand-text focus:outline-none focus:ring-1 focus:ring-brand-gold"
                 />
+              </div>
+
+              {/* 1-Click Steadfast Courier Dispatch Block */}
+              <div className="p-4 rounded-xl bg-brand-card border border-emerald-500/40 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                      <Truck className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
+                        ১-ক্লিক কুরিয়ার বুকিং (Steadfast Courier API)
+                      </h4>
+                      <p className="text-[11px] text-brand-text-dim">
+                        সরাসরি স্টেডফাস্ট কুরিয়ারে পার্সেল বুক করুন
+                      </p>
+                    </div>
+                  </div>
+                  {selectedOrder.courier_tracking_id && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                      বুকড
+                    </span>
+                  )}
+                </div>
+
+                {selectedOrder.courier_tracking_id ? (
+                  <div className="p-3 rounded-lg bg-brand-surface border border-brand-border space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-brand-text-muted">কুরিয়ার ট্র্যাকিং কোড:</span>
+                      <span className="font-mono font-bold text-indigo-400 text-sm">
+                        {selectedOrder.courier_tracking_id}
+                      </span>
+                    </div>
+                    <a
+                      href={`https://steadfast.com.bd/t/${encodeURIComponent(selectedOrder.courier_tracking_id)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-2 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/40 text-indigo-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors"
+                    >
+                      <span>স্টেডফাস্ট ওয়েবসাইটে লাইভ ট্র্যাক করুন</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-[11px] text-brand-text-muted leading-relaxed">
+                      বাটনে ক্লিক করার সাথে সাথে গ্রাহকের নাম, ফোন, জেলা, ঠিকানা ও ক্যাশ টাকার পরিমাণ (৳{selectedOrder.total_amount}) দিয়ে Steadfast-এ অটো এন্ট্রি হবে এবং ট্র্যাকিং কোড সেভ হয়ে যাবে।
+                    </p>
+                    <button
+                      type="button"
+                      disabled={bookingCourierId === selectedOrder.id}
+                      onClick={() => handleSendToCourier(selectedOrder.id)}
+                      className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                    >
+                      <Truck className="w-4 h-4" />
+                      <span>
+                        {bookingCourierId === selectedOrder.id
+                          ? "স্টেডফাস্ট কুরিয়ারে পাঠানো হচ্ছে..."
+                          : "১-ক্লিকে স্টেডফাস্ট কুরিয়ারে পাঠান (Book Parcel)"}
+                      </span>
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Courier Tracking ID (Steadfast / Pathao CID) */}

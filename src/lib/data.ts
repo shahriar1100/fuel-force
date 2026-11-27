@@ -40,6 +40,12 @@ export interface StoreSettingsData {
   announcement_text?: string;
   announcement_enabled?: boolean;
   facebook_pixel_id?: string;
+  courier_provider?: string;
+  steadfast_api_key?: string;
+  steadfast_secret_key?: string;
+  pathao_client_id?: string;
+  pathao_client_secret?: string;
+  pathao_store_id?: string;
 }
 
 export interface StoreData {

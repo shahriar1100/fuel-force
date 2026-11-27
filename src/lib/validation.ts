@@ -44,4 +44,10 @@ export const settingsUpdateSchema = z.object({
   announcement_text: z.string().optional(),
   announcement_enabled: z.boolean().optional(),
   facebook_pixel_id: z.string().optional(),
+  courier_provider: z.string().optional(),
+  steadfast_api_key: z.string().optional(),
+  steadfast_secret_key: z.string().optional(),
+  pathao_client_id: z.string().optional(),
+  pathao_client_secret: z.string().optional(),
+  pathao_store_id: z.string().optional(),
 });

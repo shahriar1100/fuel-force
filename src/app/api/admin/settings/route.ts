@@ -76,6 +76,12 @@ export async function PATCH(req: NextRequest) {
       announcement_text,
       announcement_enabled,
       facebook_pixel_id,
+      courier_provider,
+      steadfast_api_key,
+      steadfast_secret_key,
+      pathao_client_id,
+      pathao_client_secret,
+      pathao_store_id,
     } = result.data;
 
     let updated: any = null;
@@ -114,6 +120,12 @@ export async function PATCH(req: NextRequest) {
       announcement_text: announcement_text !== undefined ? announcement_text : existing.announcement_text,
       announcement_enabled: announcement_enabled !== undefined ? announcement_enabled : existing.announcement_enabled,
       facebook_pixel_id: facebook_pixel_id !== undefined ? facebook_pixel_id : existing.facebook_pixel_id,
+      courier_provider: courier_provider !== undefined ? courier_provider : existing.courier_provider || "steadfast",
+      steadfast_api_key: steadfast_api_key !== undefined ? steadfast_api_key : existing.steadfast_api_key || "",
+      steadfast_secret_key: steadfast_secret_key !== undefined ? steadfast_secret_key : existing.steadfast_secret_key || "",
+      pathao_client_id: pathao_client_id !== undefined ? pathao_client_id : existing.pathao_client_id || "",
+      pathao_client_secret: pathao_client_secret !== undefined ? pathao_client_secret : existing.pathao_client_secret || "",
+      pathao_store_id: pathao_store_id !== undefined ? pathao_store_id : existing.pathao_store_id || "",
     };
     saveLocalSettings(newSettings);
     if (!updated) updated = newSettings;
