@@ -15,9 +15,31 @@ import {
   INITIAL_PRODUCT_IMAGES,
 } from "@/lib/constants";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  product?: {
+    id: string;
+    name: string;
+    price: number;
+    regular_price: number;
+    stock_quantity?: number;
+    description?: string;
+  };
+  bannerImage?: {
+    id: string;
+    url: string;
+    alt?: string;
+  };
+}
+
+export function HeroSection({ product, bannerImage }: HeroSectionProps) {
   const [quantity, setQuantity] = useState(1);
   const { addToCart, buyNow } = useCart();
+
+  const price = product?.price ?? PRODUCT_PRICE;
+  const regularPrice = product?.regular_price ?? (price + 800);
+  const savings = Math.max(0, regularPrice - price);
+  const heroImgUrl = bannerImage?.url || INITIAL_PRODUCT_IMAGES[0].url;
+  const heroImgAlt = bannerImage?.alt || INITIAL_PRODUCT_IMAGES[0].alt;
 
   const handleIncrement = () => setQuantity((q) => Math.min(20, q + 1));
   const handleDecrement = () => setQuantity((q) => Math.max(1, q - 1));
@@ -40,8 +62,8 @@ export function HeroSection() {
             <div className="relative w-full max-w-lg aspect-square rounded-3xl overflow-hidden border border-brand-borderGold bg-brand-surface/60 p-4 shadow-luxury group">
               <div className="relative w-full h-full rounded-2xl overflow-hidden">
                 <Image
-                  src={INITIAL_PRODUCT_IMAGES[0].url}
-                  alt={INITIAL_PRODUCT_IMAGES[0].alt}
+                  src={heroImgUrl}
+                  alt={heroImgAlt}
                   fill
                   priority
                   className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -106,20 +128,22 @@ export function HeroSection() {
             <div className="flex items-baseline gap-4 pt-1">
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl sm:text-4xl font-extrabold text-brand-gold font-display">
-                  ৳{PRODUCT_PRICE.toLocaleString("bn-BD")}
+                  ৳{price.toLocaleString("bn-BD")}
                 </span>
                 <span className="text-lg text-brand-text-dim line-through">
-                  ৳{PRODUCT_REGULAR_PRICE.toLocaleString("bn-BD")}
+                  ৳{regularPrice.toLocaleString("bn-BD")}
                 </span>
               </div>
-              <span className="px-2.5 py-1 rounded-md bg-brand-purple/20 border border-brand-purple/40 text-brand-text text-xs font-semibold">
-                ৳{(PRODUCT_REGULAR_PRICE - PRODUCT_PRICE).toLocaleString("bn-BD")} ছাড়
-              </span>
+              {savings > 0 && (
+                <span className="px-2.5 py-1 rounded-md bg-brand-purple/20 border border-brand-purple/40 text-brand-text text-xs font-semibold">
+                  ৳{savings.toLocaleString("bn-BD")} ছাড়
+                </span>
+              )}
             </div>
 
             {/* Short Intro */}
             <p className="text-sm sm:text-base text-brand-text-muted leading-relaxed">
-              আসল প্যাকেজিংয়ে প্রমাণিত বিশ্বখ্যাত স্ট্যান্ডার্ডাইজড G115® প্যানাক্স জিনসেং ও ফুল-স্পেকট্রাম KSM-66® অশ্বগন্ধা রুট এক্সট্রাক্টের সমন্বয়ে প্রস্তুত। এটি কর্মব্যস্ত পুরুষের শারীরিক শক্তি, স্ট্যামিনা, উদ্যম এবং স্বাভাবিক প্রাণশক্তি ধরে রাখতে অতুলনীয়।
+              {product?.description || "আসল প্যাকেজিংয়ে প্রমাণিত বিশ্বখ্যাত স্ট্যান্ডার্ডাইজড G115® প্যানাক্স জিনসেং ও ফুল-স্পেকট্রাম KSM-66® অশ্বগন্ধা রুট এক্সট্রাক্টের সমন্বয়ে প্রস্তুত। এটি কর্মব্যস্ত পুরুষের শারীরিক শক্তি, স্ট্যামিনা, উদ্যম এবং স্বাভাবিক প্রাণশক্তি ধরে রাখতে অতুলনীয়।"}
             </p>
 
             {/* Quantity Selector & Action Buttons */}
@@ -146,14 +170,14 @@ export function HeroSection() {
                   </button>
                 </div>
                 <span className="text-xs text-brand-text-muted">
-                  মোট: <strong className="text-brand-gold font-bold">৳{(PRODUCT_PRICE * quantity).toLocaleString("bn-BD")}</strong>
+                  মোট: <strong className="text-brand-gold font-bold">৳{(price * quantity).toLocaleString("bn-BD")}</strong>
                 </span>
               </div>
 
               {/* CTA Buttons */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5 pt-2">
                 <button
-                  onClick={() => buyNow(quantity)}
+                  onClick={() => buyNow(quantity, price, heroImgUrl)}
                   className="w-full flex items-center justify-center gap-2 py-3.5 sm:py-4 px-4 sm:px-6 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-black font-extrabold text-sm sm:text-base shadow-gold transition-all duration-200 active:scale-[0.98]"
                 >
                   <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-black flex-shrink-0" />
@@ -161,7 +185,7 @@ export function HeroSection() {
                 </button>
 
                 <button
-                  onClick={() => addToCart(quantity)}
+                  onClick={() => addToCart(quantity, price, heroImgUrl)}
                   className="w-full flex items-center justify-center gap-2 py-3.5 sm:py-4 px-4 sm:px-6 rounded-xl bg-brand-surface hover:bg-brand-cardHover border border-brand-borderGold text-brand-text font-bold text-sm sm:text-base transition-all duration-200 active:scale-[0.98]"
                 >
                   <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 text-brand-gold flex-shrink-0" />

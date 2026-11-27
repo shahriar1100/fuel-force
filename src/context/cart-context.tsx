@@ -10,11 +10,12 @@ interface CartContextType {
   isOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
-  addToCart: (quantity?: number) => void;
+  addToCart: (quantity?: number, customPrice?: number, customImage?: string) => void;
   updateQuantity: (quantity: number) => void;
   removeFromCart: () => void;
-  buyNow: (quantity?: number) => void;
+  buyNow: (quantity?: number, customPrice?: number, customImage?: string) => void;
   subtotal: number;
+  livePrice: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -26,6 +27,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [item, setItem] = useState<CartItem | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [livePrice, setLivePrice] = useState<number>(PRODUCT_PRICE);
+  const [liveImage, setLiveImage] = useState<string>(INITIAL_PRODUCT_IMAGES[0].url);
 
   // Load cart from localStorage
   useEffect(() => {
@@ -39,6 +42,31 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoaded(true);
     }
+  }, []);
+
+  // Sync with live product data on mount
+  useEffect(() => {
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.product) {
+          const fetchedPrice = Number(data.product.price) || PRODUCT_PRICE;
+          const fetchedImg = data.bannerImage?.url || INITIAL_PRODUCT_IMAGES[0].url;
+          setLivePrice(fetchedPrice);
+          setLiveImage(fetchedImg);
+
+          // Update cached item's price and image if already loaded
+          setItem((prev) => {
+            if (!prev) return null;
+            return {
+              ...prev,
+              price: fetchedPrice,
+              image: fetchedImg,
+            };
+          });
+        }
+      })
+      .catch(() => {});
   }, []);
 
   // Sync to localStorage
@@ -55,15 +83,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [item, isLoaded]);
 
-  const addToCart = (quantity = 1) => {
+  const addToCart = (quantity = 1, customPrice?: number, customImage?: string) => {
+    const finalPrice = typeof customPrice === "number" ? customPrice : livePrice;
+    const finalImage = customImage || liveImage;
+
     setItem((prev) => {
       const newQty = prev ? prev.quantity + quantity : quantity;
       return {
         productId: "eagle-endurance-for-men",
         name: `${BRAND_NAME} – ${PRODUCT_NAME}`,
-        price: PRODUCT_PRICE,
+        price: finalPrice,
         quantity: Math.max(1, Math.min(20, newQty)),
-        image: INITIAL_PRODUCT_IMAGES[0].url,
+        image: finalImage,
       };
     });
     setIsOpen(true);
@@ -87,9 +118,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItem(null);
   };
 
-  const buyNow = (quantity = 1) => {
+  const buyNow = (quantity = 1, customPrice?: number, customImage?: string) => {
     const validQty = Math.max(1, Math.min(20, quantity));
-    addToCart(validQty);
+    addToCart(validQty, customPrice, customImage);
     setIsOpen(false);
     router.push(`/checkout?qty=${validQty}`);
   };
@@ -108,6 +139,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         removeFromCart,
         buyNow,
         subtotal,
+        livePrice,
       }}
     >
       {children}

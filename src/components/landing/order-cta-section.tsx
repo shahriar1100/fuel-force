@@ -12,9 +12,28 @@ import {
   INITIAL_PRODUCT_IMAGES,
 } from "@/lib/constants";
 
-export function OrderCTASection() {
+interface OrderCTASectionProps {
+  product?: {
+    id: string;
+    name: string;
+    price: number;
+    regular_price: number;
+  };
+  bannerImage?: {
+    id: string;
+    url: string;
+    alt?: string;
+  };
+}
+
+export function OrderCTASection({ product, bannerImage }: OrderCTASectionProps) {
   const [quantity, setQuantity] = useState(1);
   const { buyNow } = useCart();
+
+  const price = product?.price ?? PRODUCT_PRICE;
+  const regularPrice = product?.regular_price ?? (price + 800);
+  const heroImgUrl = bannerImage?.url || INITIAL_PRODUCT_IMAGES[0].url;
+  const heroImgAlt = bannerImage?.alt || "FORCE FUEL Eagle Endurance";
 
   const handleIncrement = () => setQuantity((q) => Math.min(20, q + 1));
   const handleDecrement = () => setQuantity((q) => Math.max(1, q - 1));
@@ -31,8 +50,8 @@ export function OrderCTASection() {
             <div className="lg:col-span-4 flex justify-center">
               <div className="relative w-48 h-48 sm:w-64 sm:h-64 rounded-2xl overflow-hidden border border-brand-borderGold bg-brand-surface shadow-gold">
                 <Image
-                  src={INITIAL_PRODUCT_IMAGES[0].url}
-                  alt="FORCE FUEL Eagle Endurance"
+                  src={heroImgUrl}
+                  alt={heroImgAlt}
                   fill
                   className="object-cover"
                   sizes="256px"
@@ -57,10 +76,10 @@ export function OrderCTASection() {
               {/* Price & Savings */}
               <div className="flex flex-wrap items-baseline gap-2 sm:gap-3">
                 <span className="text-2xl sm:text-4xl font-extrabold text-brand-gold font-display">
-                  ৳{(PRODUCT_PRICE * quantity).toLocaleString("bn-BD")}
+                  ৳{(price * quantity).toLocaleString("bn-BD")}
                 </span>
                 <span className="text-sm sm:text-base text-brand-text-dim line-through">
-                  ৳{(PRODUCT_REGULAR_PRICE * quantity).toLocaleString("bn-BD")}
+                  ৳{(regularPrice * quantity).toLocaleString("bn-BD")}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-brand-purple/25 text-brand-text text-[11px] sm:text-xs font-bold">
                   ক্যাশ অন ডেলিভারি
@@ -94,7 +113,7 @@ export function OrderCTASection() {
               {/* Action Button */}
               <div>
                 <button
-                  onClick={() => buyNow(quantity)}
+                  onClick={() => buyNow(quantity, price, heroImgUrl)}
                   className="w-full sm:w-auto flex items-center justify-center gap-2 py-3.5 sm:py-4 px-5 sm:px-10 rounded-xl bg-gold-gradient hover:bg-gold-gradient-hover text-black font-extrabold text-sm sm:text-base md:text-lg shadow-gold transition-all duration-200 active:scale-[0.98]"
                 >
                   <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-black flex-shrink-0" />

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -36,6 +36,28 @@ function CheckoutContent() {
   const [quantity, setQuantity] = useState(isNaN(initialQty) || initialQty < 1 ? 1 : initialQty);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [unitPrice, setUnitPrice] = useState<number>(PRODUCT_PRICE);
+  const [productImage, setProductImage] = useState<string>(INITIAL_PRODUCT_IMAGES[0].url);
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+
+  useEffect(() => {
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          if (data.product?.price) {
+            setUnitPrice(Number(data.product.price));
+          }
+          if (data.bannerImage?.url) {
+            setProductImage(data.bannerImage.url);
+          }
+          if (data.settings) {
+            setSettings((prev) => ({ ...prev, ...data.settings }));
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const {
     register,
@@ -56,10 +78,10 @@ function CheckoutContent() {
   const selectedDistrict = watch("district");
   const isDhaka = (selectedDistrict || "").trim().toLowerCase() === "dhaka";
   const deliveryCharge = isDhaka
-    ? DEFAULT_SETTINGS.delivery_charge_inside_dhaka
-    : DEFAULT_SETTINGS.delivery_charge_outside_dhaka;
+    ? settings.delivery_charge_inside_dhaka
+    : settings.delivery_charge_outside_dhaka;
 
-  const subtotal = PRODUCT_PRICE * quantity;
+  const subtotal = unitPrice * quantity;
   const totalAmount = subtotal + deliveryCharge;
 
   const onSubmit = async (data: CheckoutSchemaType) => {
@@ -262,7 +284,7 @@ function CheckoutContent() {
                 <div className="flex gap-4 items-center">
                   <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-brand-card border border-brand-border flex-shrink-0">
                     <Image
-                      src={INITIAL_PRODUCT_IMAGES[0].url}
+                      src={productImage}
                       alt="FORCE FUEL Eagle Endurance"
                       fill
                       className="object-cover"
@@ -275,7 +297,7 @@ function CheckoutContent() {
                     </h3>
                     <p className="text-xs text-brand-text-muted">{PRODUCT_NAME_BN}</p>
                     <p className="text-sm font-bold text-brand-gold mt-1">
-                      ৳{PRODUCT_PRICE.toLocaleString("bn-BD")}
+                      ৳{unitPrice.toLocaleString("bn-BD")}
                     </p>
                   </div>
                 </div>

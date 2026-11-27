@@ -5,7 +5,20 @@ import Image from "next/image";
 import { Check, Package, FileText } from "lucide-react";
 import { PRODUCT_SPECS, INITIAL_PRODUCT_IMAGES } from "@/lib/constants";
 
-export function ProductDescription() {
+interface ProductDescriptionProps {
+  product?: {
+    name?: string;
+    description?: string;
+  };
+  image?: {
+    url: string;
+    alt?: string;
+  };
+}
+
+export function ProductDescription({ product, image }: ProductDescriptionProps) {
+  const displayImage = image?.url || INITIAL_PRODUCT_IMAGES[1].url;
+  const displayAlt = image?.alt || INITIAL_PRODUCT_IMAGES[1].alt;
   return (
     <section id="product-details" className="py-12 sm:py-16 bg-brand-bg relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,8 +40,8 @@ export function ProductDescription() {
             <div className="relative rounded-3xl overflow-hidden border border-brand-borderGold bg-brand-surface p-4 shadow-luxury">
               <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden">
                 <Image
-                  src={INITIAL_PRODUCT_IMAGES[1].url}
-                  alt={INITIAL_PRODUCT_IMAGES[1].alt}
+                  src={displayImage}
+                  alt={displayAlt}
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 40vw"

@@ -7,38 +7,44 @@ import { FAQSection } from "@/components/landing/faq-section";
 import { OrderCTASection } from "@/components/landing/order-cta-section";
 import { Footer } from "@/components/landing/footer";
 import { MobileStickyBar } from "@/components/landing/mobile-sticky-bar";
+import { getStoreData } from "@/lib/data";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function HomePage() {
+  const { product, images, bannerImage, settings } = await getStoreData();
+
   return (
     <div className="relative min-h-screen bg-brand-bg flex flex-col">
       {/* Header */}
       <Header />
 
       <main className="flex-1">
-        {/* Hero Section */}
-        <HeroSection />
+        {/* Hero Section with Live Banner Image & Price */}
+        <HeroSection product={product} bannerImage={bannerImage} />
 
         {/* Product Highlights */}
         <ProductHighlights />
 
         {/* Product Description & Specifications */}
-        <ProductDescription />
+        <ProductDescription product={product} image={images[1] || bannerImage} />
 
-        {/* Product Gallery */}
-        <ProductGallery />
+        {/* Dynamic Product Gallery */}
+        <ProductGallery images={images} />
 
         {/* FAQ */}
         <FAQSection />
 
-        {/* Order CTA Section */}
-        <OrderCTASection />
+        {/* Order CTA Section with Live Banner Image & Price */}
+        <OrderCTASection product={product} bannerImage={bannerImage} />
       </main>
 
-      {/* Compact Footer */}
-      <Footer />
+      {/* Dynamic Compact Footer with DB Settings */}
+      <Footer settings={settings} />
 
-      {/* Sticky Bottom Buy Now on Mobile */}
-      <MobileStickyBar />
+      {/* Sticky Bottom Buy Now on Mobile with Live Price */}
+      <MobileStickyBar price={product.price} bannerImage={bannerImage.url} />
     </div>
   );
 }

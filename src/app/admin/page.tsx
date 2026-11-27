@@ -48,6 +48,7 @@ export default function AdminDashboardPage() {
   });
   const [images, setImages] = useState<any[]>([]);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [imageMessage, setImageMessage] = useState<string | null>(null);
   const [savingProduct, setSavingProduct] = useState(false);
   const [productMessage, setProductMessage] = useState<string | null>(null);
 
@@ -189,6 +190,7 @@ export default function AdminDashboardPage() {
     if (!file) return;
 
     setUploadingImage(true);
+    setImageMessage(null);
     const formData = new FormData();
     formData.append("file", file);
 
@@ -200,9 +202,14 @@ export default function AdminDashboardPage() {
       const data = await res.json();
       if (data.success && data.image) {
         setImages((prev) => [...prev, data.image]);
+        setImageMessage("নতুন ছবি সফলভাবে আপলোড হয়েছে!");
+        setTimeout(() => setImageMessage(null), 3000);
+      } else {
+        setImageMessage(data.message || "ছবি আপলোড ব্যর্থ হয়েছে");
       }
     } catch (err) {
       console.error("Upload failed:", err);
+      setImageMessage("ছবি আপলোড ব্যর্থ হয়েছে");
     } finally {
       setUploadingImage(false);
     }
@@ -222,9 +229,14 @@ export default function AdminDashboardPage() {
             is_primary: img.id === imageId,
           }))
         );
+        setImageMessage("মূল ব্যানার ছবি সফলভাবে পরিবর্তন করা হয়েছে!");
+        setTimeout(() => setImageMessage(null), 3000);
+      } else {
+        setImageMessage("ব্যানার পরিবর্তন ব্যর্থ হয়েছে");
       }
     } catch (err) {
       console.error(err);
+      setImageMessage("ব্যানার পরিবর্তন ব্যর্থ হয়েছে");
     }
   };
 
@@ -236,9 +248,12 @@ export default function AdminDashboardPage() {
       });
       if (res.ok) {
         setImages((prev) => prev.filter((img) => img.id !== imageId));
+        setImageMessage("ছবি সফলভাবে মুছে ফেলা হয়েছে");
+        setTimeout(() => setImageMessage(null), 3000);
       }
     } catch (err) {
       console.error(err);
+      setImageMessage("ছবি মুছতে সমস্যা হয়েছে");
     }
   };
 
@@ -735,13 +750,16 @@ export default function AdminDashboardPage() {
               </form>
             </div>
 
-            {/* Product Images Management */}
+            {/* Product Images Management & Banner Selector */}
             <div className="lg:col-span-6 p-4 sm:p-8 rounded-2xl sm:rounded-3xl bg-brand-surface border border-brand-border space-y-5 sm:space-y-6">
               <div className="flex items-center justify-between pb-4 border-b border-brand-border gap-2">
-                <h3 className="font-bold text-base sm:text-lg text-brand-text">প্রোডাক্ট ছবি গ্যালারি</h3>
-                <label className="cursor-pointer inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs font-bold text-brand-gold transition-colors flex-shrink-0">
+                <div>
+                  <h3 className="font-bold text-base sm:text-lg text-brand-text">প্রোডাক্ট ও ব্যানার ছবি</h3>
+                  <p className="text-xs text-brand-text-muted mt-0.5">যেকোনো ছবিকে ১-ক্লিকে মূল ব্যানার ছবি হিসেবে সেট করতে পারবেন</p>
+                </div>
+                <label className="cursor-pointer inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-borderGold text-xs font-bold text-brand-gold transition-colors flex-shrink-0 shadow-sm">
                   <Upload className="w-3.5 h-3.5" />
-                  <span>{uploadingImage ? "আপলোড হচ্ছে..." : "নতুন ছবি"}</span>
+                  <span>{uploadingImage ? "আপলোড হচ্ছে..." : "নতুন ছবি আপলোড"}</span>
                   <input
                     type="file"
                     accept="image/*"
@@ -752,11 +770,42 @@ export default function AdminDashboardPage() {
                 </label>
               </div>
 
+              {imageMessage && (
+                <div className="p-3.5 rounded-xl bg-brand-gold/15 border border-brand-gold/30 text-xs text-brand-gold font-medium">
+                  {imageMessage}
+                </div>
+              )}
+
+              {/* Active Banner Indicator Box */}
+              <div className="p-3.5 rounded-2xl bg-brand-card border border-brand-borderGold/50 flex items-center gap-3.5">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border border-brand-gold flex-shrink-0 shadow-gold">
+                  <Image
+                    src={images.find((i) => i.is_primary)?.image_url || images[0]?.image_url || "/images/bottle-1.png"}
+                    alt="Current Banner"
+                    fill
+                    className="object-cover"
+                    sizes="80px"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wider text-black bg-gold-gradient px-2.5 py-0.5 rounded-md shadow">
+                    <Star className="w-3 h-3 fill-black" /> বর্তমান মূল ব্যানার ছবি
+                  </span>
+                  <p className="text-xs text-brand-text-muted mt-1.5 leading-relaxed">
+                    এই ছবিটি হোমপেজের শীর্ষ হিরো সেকশন এবং চেকআউটে প্রদর্শিত হচ্ছে। নিচে যেকোনো ছবির <span className="text-brand-gold font-bold">"ব্যানার করুন"</span> বাটনে চাপলে ব্যানার পরিবর্তিত হবে।
+                  </p>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {images.map((img) => (
                   <div
                     key={img.id}
-                    className="relative rounded-2xl overflow-hidden border border-brand-border bg-brand-card group aspect-square flex flex-col justify-end p-2.5 sm:p-3"
+                    className={`relative rounded-2xl overflow-hidden bg-brand-card group aspect-square flex flex-col justify-end p-2.5 sm:p-3 transition-all ${
+                      img.is_primary
+                        ? "border-2 border-brand-gold shadow-gold ring-1 ring-brand-gold/50"
+                        : "border border-brand-border hover:border-brand-borderGold/50"
+                    }`}
                   >
                     <Image
                       src={img.image_url}
@@ -767,30 +816,30 @@ export default function AdminDashboardPage() {
                     />
 
                     {img.is_primary && (
-                      <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-gold-gradient text-black text-[10px] font-black shadow uppercase z-10">
-                        মূল ছবি
+                      <span className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-md bg-gold-gradient text-black text-[10px] font-black shadow-gold uppercase z-10 flex items-center gap-1">
+                        <Star className="w-3 h-3 fill-black" /> মূল ব্যানার
                       </span>
                     )}
 
-                    <div className="relative z-10 flex items-center justify-between bg-black/85 backdrop-blur-md p-1.5 rounded-xl border border-brand-border gap-1">
+                    <div className="relative z-10 flex items-center justify-between bg-black/90 backdrop-blur-md p-1.5 rounded-xl border border-brand-border gap-1.5">
                       <button
                         type="button"
                         onClick={() => handleSetPrimaryImage(img.id)}
-                        className={`text-[11px] sm:text-xs font-semibold px-2 py-1 rounded-lg transition-colors flex items-center gap-1 ${
+                        className={`text-[11px] sm:text-xs font-bold px-2.5 py-1.5 rounded-lg transition-all flex items-center gap-1.5 flex-1 justify-center ${
                           img.is_primary
-                            ? "text-brand-gold bg-brand-gold/15"
-                            : "text-brand-text-muted hover:text-white"
+                            ? "text-black bg-gold-gradient shadow"
+                            : "text-brand-gold hover:bg-brand-gold/20 border border-brand-gold/40"
                         }`}
-                        title="মূল ছবি হিসেবে নির্বাচন করুন"
+                        title="ওয়েবসাইটের ব্যানার ছবি হিসেবে সেট করুন"
                       >
-                        <Star className="w-3.5 h-3.5 flex-shrink-0" />
-                        <span className="truncate">{img.is_primary ? "প্রাইমারি" : "প্রাইমারি করুন"}</span>
+                        <Star className={`w-3.5 h-3.5 flex-shrink-0 ${img.is_primary ? "fill-black" : "text-brand-gold"}`} />
+                        <span className="truncate">{img.is_primary ? "সক্রিয় ব্যানার" : "ব্যানার করুন"}</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => handleDeleteImage(img.id)}
-                        className="p-1.5 rounded-lg text-brand-text-muted hover:text-red-400 transition-colors flex-shrink-0"
+                        className="p-1.5 rounded-lg text-brand-text-muted hover:text-red-400 hover:bg-red-500/10 transition-colors flex-shrink-0"
                         title="ছবি মুছুন"
                       >
                         <Trash2 className="w-3.5 h-3.5" />

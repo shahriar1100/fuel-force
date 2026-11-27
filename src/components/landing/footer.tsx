@@ -6,8 +6,17 @@ import { Phone, MessageSquare, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { BRAND_NAME, PRODUCT_NAME, PRODUCT_NAME_BN, DEFAULT_SETTINGS } from "@/lib/constants";
 
-export function Footer() {
+interface FooterProps {
+  settings?: Partial<typeof DEFAULT_SETTINGS>;
+}
+
+export function Footer({ settings }: FooterProps) {
   const [activeModal, setActiveModal] = useState<"privacy" | "terms" | "delivery" | null>(null);
+
+  const phone = settings?.contact_phone || DEFAULT_SETTINGS.contact_phone;
+  const whatsapp = settings?.whatsapp_number || DEFAULT_SETTINGS.whatsapp_number;
+  const deliveryInside = settings?.delivery_charge_inside_dhaka ?? DEFAULT_SETTINGS.delivery_charge_inside_dhaka;
+  const deliveryOutside = settings?.delivery_charge_outside_dhaka ?? DEFAULT_SETTINGS.delivery_charge_outside_dhaka;
 
   return (
     <>
@@ -35,15 +44,15 @@ export function Footer() {
             {/* Quick Contact & Action Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
               <a
-                href={`tel:${DEFAULT_SETTINGS.contact_phone}`}
+                href={`tel:${phone}`}
                 className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs font-semibold text-brand-text transition-colors group"
               >
                 <Phone className="w-3.5 h-3.5 text-brand-gold group-hover:scale-110 transition-transform" />
-                <span>{DEFAULT_SETTINGS.contact_phone}</span>
+                <span>{phone}</span>
               </a>
 
               <a
-                href={`https://wa.me/${DEFAULT_SETTINGS.whatsapp_number.replace(/[^0-9]/g, "")}`}
+                href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-border text-xs font-semibold text-brand-text transition-colors group"
@@ -156,7 +165,7 @@ export function Footer() {
                   <strong>ডেলিভারি এরিয়া:</strong> আমরা সমগ্র বাংলাদেশের ৬৪টি জেলায় দ্রুত ও নিরাপদ হোম ডেলিভারি প্রদান করি।
                 </p>
                 <p>
-                  <strong>ডেলিভারি চার্জ:</strong> ঢাকা সিটি কর্পোরেশনের ভেতরে ডেলিভারি চার্জ মাত্র ৳৭০ (২৪-৪৮ ঘণ্টার মধ্যে ডেলিভারি)। ঢাকা সিটির বাইরে সারা দেশে ডেলিভারি চার্জ ৳১৩০ (৪৮-৭২ ঘণ্টার মধ্যে ডেলিভারি)।
+                  <strong>ডেলিভারি চার্জ:</strong> ঢাকা সিটি কর্পোরেশনের ভেতরে ডেলিভারি চার্জ মাত্র ৳{deliveryInside.toLocaleString("bn-BD")} (২৪-৪৮ ঘণ্টার মধ্যে ডেলিভারি)। ঢাকা সিটির বাইরে সারা দেশে ডেলিভারি চার্জ ৳{deliveryOutside.toLocaleString("bn-BD")} (৪৮-৭২ ঘণ্টার মধ্যে ডেলিভারি)।
                 </p>
                 <p>
                   <strong>প্যাকেট চেক ও রিটার্ন:</strong> ডেলিভারিম্যান উপস্থিত থাকা অবস্থায় প্যাকেটের মূল সিল অক্ষত আছে কি না তা দেখে মূল্য পরিশোধ করতে পারবেন। যদি কোনো কারণে বোতলের সিল ভাঙা থাকে, তবে পণ্যটি তাৎক্ষণিক কোনো খরচ ছাড়াই ফেরত পাঠাতে পারবেন। স্বাস্থ্য সুরক্ষার স্বার্থে একবার সিল খোলা বা ব্যবহৃত সাপ্লিমেন্ট বোতল ফেরত নেওয়া হয় না।

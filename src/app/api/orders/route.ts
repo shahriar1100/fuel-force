@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkoutSchema } from "@/lib/validation";
 import { createAdminClient, isSupabaseConfigured } from "@/lib/supabase/admin";
 import { PRODUCT_PRICE, DEFAULT_SETTINGS } from "@/lib/constants";
+import { getStoreData } from "@/lib/data";
 import fs from "fs";
 import path from "path";
 
@@ -88,41 +89,12 @@ export async function POST(req: NextRequest) {
     recentSubmissions.set(phoneKey, now);
 
     // 3. Secure Server-side price calculation (never trust client)
+    const storeData = await getStoreData();
+    const unitPrice = storeData.product.price;
+    const productId = storeData.product.id;
+    const deliveryInsideDhaka = storeData.settings.delivery_charge_inside_dhaka;
+    const deliveryOutsideDhaka = storeData.settings.delivery_charge_outside_dhaka;
     const supabase = createAdminClient();
-    let unitPrice = PRODUCT_PRICE;
-    let deliveryInsideDhaka = DEFAULT_SETTINGS.delivery_charge_inside_dhaka;
-    let deliveryOutsideDhaka = DEFAULT_SETTINGS.delivery_charge_outside_dhaka;
-    let productId = "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11";
-
-    // Query active product & settings from Supabase if configured
-    if (isSupabaseConfigured()) {
-      try {
-        const { data: productData } = await supabase
-          .from("products")
-          .select("id, price, stock_quantity")
-          .eq("is_active", true)
-          .limit(1)
-          .single();
-
-        if (productData) {
-          unitPrice = Number(productData.price);
-          productId = productData.id;
-        }
-
-        const { data: settingsData } = await supabase
-          .from("site_settings")
-          .select("delivery_charge_inside_dhaka, delivery_charge_outside_dhaka")
-          .limit(1)
-          .single();
-
-        if (settingsData) {
-          deliveryInsideDhaka = Number(settingsData.delivery_charge_inside_dhaka);
-          deliveryOutsideDhaka = Number(settingsData.delivery_charge_outside_dhaka);
-        }
-      } catch {
-        // Use defaults if Supabase connection fails
-      }
-    }
 
     const isDhaka = district.trim().toLowerCase() === "dhaka";
     const deliveryCharge = isDhaka ? deliveryInsideDhaka : deliveryOutsideDhaka;
