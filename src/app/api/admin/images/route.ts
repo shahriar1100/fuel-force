@@ -74,9 +74,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, message: "Only image files are allowed" }, { status: 400 });
     }
 
+    // Limit image size to 5MB
+    if (file.size > 5 * 1024 * 1024) {
+      return NextResponse.json({ success: false, message: "ছবির আকার সর্বোচ্চ ৫ মেগাবাইট (5MB) হতে পারবে" }, { status: 400 });
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const fileExt = file.name.split(".").pop() || "jpg";
+    const rawExt = file.name.split(".").pop() || "jpg";
+    const fileExt = rawExt.replace(/[^a-zA-Z0-9]/g, "").toLowerCase().slice(0, 5) || "jpg";
     const fileName = `product-${Date.now()}-${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
 
     let imageUrl = "";

@@ -20,28 +20,20 @@ export default function AdminLoginPage() {
     setError(null);
 
     try {
-      // 1. Try Supabase Auth
-      const supabase = createClient();
-      const { data, error: authError } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
+      const res = await fetch("/api/admin/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), password }),
       });
 
-      if (!authError && data?.session) {
-        // Set admin session cookie
-        document.cookie = `ff_admin_auth=true; path=/; max-age=86400; SameSite=Lax`;
+      const data = await res.json();
+
+      if (res.ok && data.success) {
         router.push("/admin");
         return;
       }
 
-      // 2. Production Admin Fallback (Default credentials: admin@forcefuel.com / admin123)
-      if (email.trim().toLowerCase() === "admin@forcefuel.com" && password === "admin123") {
-        document.cookie = `ff_admin_auth=true; path=/; max-age=86400; SameSite=Lax`;
-        router.push("/admin");
-        return;
-      }
-
-      setError(authError?.message || "ভুল ইমেইল বা পাসওয়ার্ড দেওয়া হয়েছে");
+      setError(data.message || "ভুল ইমেইল বা পাসওয়ার্ড দেওয়া হয়েছে");
     } catch (err: any) {
       setError(err.message || "লগইন করতে সমস্যা হয়েছে");
     } finally {

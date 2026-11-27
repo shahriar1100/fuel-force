@@ -256,7 +256,9 @@ export async function GET(req: NextRequest) {
         .single();
 
       if (orderData) {
-        return NextResponse.json({ success: true, order: orderData });
+        // Strip sensitive internal admin notes from public view
+        const { admin_notes, ...safeOrder } = orderData;
+        return NextResponse.json({ success: true, order: safeOrder });
       }
     } catch {
       // Check local store
@@ -267,7 +269,8 @@ export async function GET(req: NextRequest) {
   const localStore = getLocalStore();
   const order = localStore.orders.find((o: any) => o.order_number === orderNumber);
   if (order) {
-    return NextResponse.json({ success: true, order });
+    const { admin_notes, ...safeOrder } = order;
+    return NextResponse.json({ success: true, order: safeOrder });
   }
 
   return NextResponse.json({ success: false, message: "Order not found" }, { status: 404 });

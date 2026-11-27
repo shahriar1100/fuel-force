@@ -151,7 +151,10 @@ export default function AdminDashboardPage() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/auth/logout", { method: "POST" });
+    } catch {}
     document.cookie = "ff_admin_auth=; path=/; max-age=0";
     router.push("/admin/login");
   };
