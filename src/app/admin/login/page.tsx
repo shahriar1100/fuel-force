@@ -34,11 +34,8 @@ export default function AdminLoginPage() {
         return;
       }
 
-      // 2. Dev / Fallback Admin Access
-      if (
-        (email === "admin@forcefuel.com" && password === "admin123") ||
-        (email.trim().length > 3 && password.length >= 6)
-      ) {
+      // 2. Production Admin Fallback (Default credentials: admin@forcefuel.com / admin123)
+      if (email.trim().toLowerCase() === "admin@forcefuel.com" && password === "admin123") {
         document.cookie = `ff_admin_auth=true; path=/; max-age=86400; SameSite=Lax`;
         router.push("/admin");
         return;
