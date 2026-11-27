@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/theme-context";
 import { CartProvider } from "@/context/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { FacebookPixel } from "@/components/analytics/facebook-pixel";
 import { BRAND_NAME, PRODUCT_NAME, PRODUCT_NAME_BN, PRODUCT_PRICE, PRODUCT_SUBTITLE } from "@/lib/constants";
 
 const inter = Inter({
@@ -124,6 +125,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-brand-bg text-brand-text min-h-screen antialiased selection:bg-brand-gold selection:text-black">
+        <FacebookPixel />
         <ThemeProvider>
           <CartProvider>
             {children}

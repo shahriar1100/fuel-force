@@ -11,6 +11,9 @@ export const DEFAULT_SETTINGS = {
   delivery_charge_outside_dhaka: 130,
   contact_phone: "+880 1700-000000",
   whatsapp_number: "+880 1700-000000",
+  announcement_text: "আজকের অর্ডারে নিশ্চিত ক্যাশ অন ডেলিভারি ও দ্রুততম সময়ে হোম ডেলিভারি!",
+  announcement_enabled: true,
+  facebook_pixel_id: "",
 };
 
 export const INITIAL_PRODUCT_IMAGES = [

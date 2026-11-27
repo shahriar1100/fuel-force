@@ -93,8 +93,10 @@ export async function PATCH(req: NextRequest) {
       );
     }
 
-    const { name, description, price, stock_quantity } = result.data;
+    const { name, description, price, regular_price, stock_quantity } = result.data;
     let updatedProduct: any = null;
+
+    const finalRegularPrice = regular_price || Math.max(price + 600, 2450);
 
     // 1. Try Supabase if configured
     if (isSupabaseConfigured()) {
@@ -127,6 +129,7 @@ export async function PATCH(req: NextRequest) {
         name,
         description,
         price,
+        regular_price: finalRegularPrice,
         stock_quantity,
         updated_at: new Date().toISOString(),
       };

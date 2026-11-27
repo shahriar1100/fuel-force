@@ -32,6 +32,7 @@ export const productUpdateSchema = z.object({
   name: z.string().trim().min(2, "পণ্যের নাম প্রদান করুন"),
   description: z.string().trim().min(10, "বিবরণ অন্তত ১০ অক্ষরের হতে হবে"),
   price: z.coerce.number().positive("মূল্য অবশ্যই ০ এর বেশি হতে হবে"),
+  regular_price: z.coerce.number().positive("রেগুলার মূল্য অবশ্যই ০ এর বেশি হতে হবে").optional(),
   stock_quantity: z.coerce.number().int().min(0, "স্টক সংখ্যা নেগেটিভ হতে পারে না"),
 });
 
@@ -40,4 +41,7 @@ export const settingsUpdateSchema = z.object({
   delivery_charge_outside_dhaka: z.coerce.number().min(0, "ডেলিভারি চার্জ প্রদান করুন"),
   contact_phone: z.string().trim().min(8, "সঠিক মোবাইল নাম্বার দিন"),
   whatsapp_number: z.string().trim().min(8, "সঠিক হোয়াটসঅ্যাপ নাম্বার দিন"),
+  announcement_text: z.string().optional(),
+  announcement_enabled: z.boolean().optional(),
+  facebook_pixel_id: z.string().optional(),
 });

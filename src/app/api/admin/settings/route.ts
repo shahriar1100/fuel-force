@@ -73,6 +73,9 @@ export async function PATCH(req: NextRequest) {
       delivery_charge_outside_dhaka,
       contact_phone,
       whatsapp_number,
+      announcement_text,
+      announcement_enabled,
+      facebook_pixel_id,
     } = result.data;
 
     let updated: any = null;
@@ -101,11 +104,16 @@ export async function PATCH(req: NextRequest) {
     }
 
     // 2. Local store
+    const existing = getLocalSettings();
     const newSettings = {
+      ...existing,
       delivery_charge_inside_dhaka,
       delivery_charge_outside_dhaka,
       contact_phone,
       whatsapp_number,
+      announcement_text: announcement_text !== undefined ? announcement_text : existing.announcement_text,
+      announcement_enabled: announcement_enabled !== undefined ? announcement_enabled : existing.announcement_enabled,
+      facebook_pixel_id: facebook_pixel_id !== undefined ? facebook_pixel_id : existing.facebook_pixel_id,
     };
     saveLocalSettings(newSettings);
     if (!updated) updated = newSettings;

@@ -37,6 +37,9 @@ export interface StoreSettingsData {
   delivery_charge_outside_dhaka: number;
   contact_phone: string;
   whatsapp_number: string;
+  announcement_text?: string;
+  announcement_enabled?: boolean;
+  facebook_pixel_id?: string;
 }
 
 export interface StoreData {
@@ -160,7 +163,7 @@ export async function getStoreData(): Promise<StoreData> {
       name: lp.name || product.name,
       description: lp.description || product.description,
       price: Number(lp.price) || product.price,
-      regular_price: Math.max(Number(lp.price) + 800, PRODUCT_REGULAR_PRICE),
+      regular_price: Number(lp.regular_price) || Math.max(Number(lp.price) + 600, PRODUCT_REGULAR_PRICE),
       stock_quantity: lp.stock_quantity ?? product.stock_quantity,
     };
   }

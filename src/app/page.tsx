@@ -17,8 +17,8 @@ export default async function HomePage() {
 
   return (
     <div className="relative min-h-screen bg-brand-bg flex flex-col">
-      {/* Header */}
-      <Header />
+      {/* Header with live settings (phone, announcement) */}
+      <Header settings={settings} />
 
       <main className="flex-1">
         {/* Hero Section with Live Banner Image & Price */}
